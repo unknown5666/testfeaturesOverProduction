@@ -510,83 +510,192 @@ body:not(.cursor-play) .cursor-ring .label {
   50% { opacity: 0.55; box-shadow: 0 0 0 6px rgba(229, 53, 43, 0); }
 }
 
-/* Hamburger */
+/* Hamburger — 48×48 hit target (WCAG 2.5.5), lines centred, morphs to an X. */
 .burger {
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   position: relative;
   z-index: 2;
+  margin-right: -8px; /* pull the padding back to the gutter edge, keeps the tap area */
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s var(--ease);
 }
+.burger:active { transform: scale(0.92); }
 .burger span {
   position: absolute;
-  left: 10px;
-  right: 10px;
+  left: 12px;
+  right: 12px;
   height: 1.5px;
   background: var(--text);
-  transition: transform 0.4s var(--ease), opacity 0.3s;
+  border-radius: 2px;
+  will-change: transform;
+  transition: transform 0.45s var(--ease), opacity 0.3s var(--ease);
 }
-.burger span:nth-child(1) { top: 17px; }
-.burger span:nth-child(2) { bottom: 17px; }
-body.menu-open .burger span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
-body.menu-open .burger span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+.burger span:nth-child(1) { top: 18px; }
+.burger span:nth-child(2) { bottom: 18px; }
+body.menu-open .burger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+body.menu-open .burger span:nth-child(2) { transform: translateY(-6px) rotate(-45deg); }
 
-/* Mobile full-screen overlay menu */
+/* Mobile full-screen overlay menu.
+   A clip-path curtain reveals the panel; each row rides in on transform/opacity
+   with a staggered delay. Everything animated here is compositor-friendly. */
 .nav-overlay {
   position: fixed;
   inset: 0;
   z-index: 8999;
-  background: var(--bg-1);
+  background:
+    radial-gradient(120% 90% at 100% 0%, var(--gold-wash), transparent 60%),
+    var(--bg-1);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--gutter);
+  gap: clamp(1.75rem, 5vh, 3rem);
+  padding: calc(var(--nav-h) + 1.5rem) var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 2rem);
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.7s var(--ease);
+  visibility: hidden; /* keeps closed-menu links out of the tab order */
+  transition: clip-path 0.72s var(--ease), visibility 0s linear 0.72s;
   pointer-events: none;
+  will-change: clip-path;
 }
 body.menu-open .nav-overlay {
   clip-path: inset(0 0 0 0);
+  visibility: visible;
   pointer-events: auto;
+  transition: clip-path 0.72s var(--ease), visibility 0s;
+}
+.nav-overlay__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--dim);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+body.menu-open .nav-overlay__eyebrow {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.12s;
 }
 .nav-overlay__links {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: clamp(0.2rem, 1.4vh, 0.6rem);
 }
 .nav-overlay__link {
+  position: relative;
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: clamp(2.6rem, 13vw, 5rem);
-  line-height: 1.02;
+  line-height: 1.04;
   color: var(--text);
   display: flex;
   align-items: baseline;
   gap: 1rem;
+  padding: 0.06em 0 0.14em;
+  min-height: 48px; /* comfortable touch target */
+  overflow: hidden; /* masks each label until it rises into place */
+  transition: color 0.35s var(--ease);
+}
+/* The label is the part that travels; clipped by the row so it rises into view. */
+.nav-overlay__link .lbl {
+  display: inline-block;
   transform: translateY(115%);
-  transition: transform 0.6s var(--ease), color 0.3s;
+  transition: transform 0.72s var(--ease);
+  will-change: transform;
 }
 .nav-overlay__link .idx {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--accent);
   letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
 }
-body.menu-open .nav-overlay__link {
-  transform: translateY(0);
+body.menu-open .nav-overlay__link .lbl { transform: translateY(0); }
+body.menu-open .nav-overlay__link .idx { opacity: 1; }
+/* Staggered cascade — labels first, index numbers trail slightly behind. */
+body.menu-open .nav-overlay__link:nth-child(1) .lbl { transition-delay: 0.10s; }
+body.menu-open .nav-overlay__link:nth-child(2) .lbl { transition-delay: 0.17s; }
+body.menu-open .nav-overlay__link:nth-child(3) .lbl { transition-delay: 0.24s; }
+body.menu-open .nav-overlay__link:nth-child(4) .lbl { transition-delay: 0.31s; }
+body.menu-open .nav-overlay__link:nth-child(1) .idx { transition-delay: 0.22s; }
+body.menu-open .nav-overlay__link:nth-child(2) .idx { transition-delay: 0.29s; }
+body.menu-open .nav-overlay__link:nth-child(3) .idx { transition-delay: 0.36s; }
+body.menu-open .nav-overlay__link:nth-child(4) .idx { transition-delay: 0.43s; }
+.nav-overlay__link:hover,
+.nav-overlay__link:focus-visible,
+.nav-overlay__link[aria-current='page'] { color: var(--accent); }
+.nav-overlay__link:active .lbl { transform: translateY(0) scale(0.98); }
+.nav-overlay__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  align-self: stretch;
+  min-height: 56px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), background 0.3s var(--ease);
 }
-.nav-overlay__link:hover { color: var(--accent); }
+.nav-overlay__cta span {
+  transition: transform 0.4s var(--ease);
+}
+.nav-overlay__cta:active { transform: translateY(0) scale(0.985); }
+.nav-overlay__cta:active span { transform: translateX(4px); }
+body.menu-open .nav-overlay__cta {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.4s;
+}
 .nav-overlay__foot {
-  margin-top: 2.5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.5rem;
   color: var(--dim);
   font-size: var(--step--1);
   opacity: 0;
-  transition: opacity 0.5s 0.4s;
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
 }
-body.menu-open .nav-overlay__foot { opacity: 1; }
+.nav-overlay__foot a { transition: color 0.3s var(--ease); }
+.nav-overlay__foot a:active { color: var(--accent); }
+body.menu-open .nav-overlay__foot {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.48s;
+}
+
+/* --- The switch: below 768px the desktop links give way to the burger. ----- */
+@media (max-width: 768px) {
+  .nav__links { display: none; }
+  .burger { display: inline-flex; align-items: center; justify-content: center; }
+}
+/* Above the breakpoint the overlay must never intercept taps, even if left open. */
+@media (min-width: 769px) {
+  .nav-overlay { display: none; }
+}
+/* Honour reduced-motion: the panel and rows appear instantly, no travel. */
+@media (prefers-reduced-motion: reduce) {
+  .nav-overlay { transition: none; }
+  .nav-overlay__eyebrow,
+  .nav-overlay__link .lbl,
+  .nav-overlay__link .idx,
+  .nav-overlay__cta,
+  .nav-overlay__foot { transition: none; transition-delay: 0s; }
+}
 
 /* --------------------------- Buttons ------------------------------------ */
 .btn {

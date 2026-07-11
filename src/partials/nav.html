@@ -24,12 +24,14 @@
 </header>
 
 <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+  <span class="nav-overlay__eyebrow" aria-hidden="true"><span class="rec-dot"></span>Menu</span>
   <nav class="nav-overlay__links" aria-label="Mobile">
-    <a class="nav-overlay__link" href="/"><span class="idx">01</span>Home</a>
-    <a class="nav-overlay__link" href="/services/"><span class="idx">02</span>Services</a>
-    <a class="nav-overlay__link" href="/portfolio/"><span class="idx">03</span>Work</a>
-    <a class="nav-overlay__link" href="/contact/"><span class="idx">04</span>Contact</a>
+    <a class="nav-overlay__link" href="/" {{#if (eq page 'home')}}aria-current="page"{{/if}}><span class="idx">01</span><span class="lbl">Home</span></a>
+    <a class="nav-overlay__link" href="/services/" {{#if (eq page 'services')}}aria-current="page"{{/if}}><span class="idx">02</span><span class="lbl">Services</span></a>
+    <a class="nav-overlay__link" href="/portfolio/" {{#if (eq page 'portfolio')}}aria-current="page"{{/if}}><span class="idx">03</span><span class="lbl">Work</span></a>
+    <a class="nav-overlay__link" href="/contact/" {{#if (eq page 'contact')}}aria-current="page"{{/if}}><span class="idx">04</span><span class="lbl">Contact</span></a>
   </nav>
+  <a class="nav-overlay__cta" href="/contact/">Start a Project<span aria-hidden="true">→</span></a>
   <div class="nav-overlay__foot">
     <a href="mailto:{{site.email}}">{{site.email}}</a>
     <a href="tel:{{site.phone}}">{{site.phoneDisplay}}</a>
