@@ -81,7 +81,10 @@
           <!-- Form -->
           <div class="reveal">
             <div class="eyebrow"><span class="tc"><span class="n">02</span> &nbsp;— START A PROJECT</span></div>
-            <form class="form" data-contact-form novalidate>
+            <!-- Wire the enquiry form to Formspree: create a form at
+                 https://formspree.io and set data-endpoint to its URL, e.g.
+                 data-endpoint="https://formspree.io/f/XXXXXXX" -->
+            <form class="form" data-contact-form data-endpoint="" novalidate>
               <div class="form__row">
                 <div class="field">
                   <label for="f-name">Name</label>
@@ -129,6 +132,32 @@
               </div>
               <p class="form__status" data-form-status role="status" aria-live="polite"></p>
             </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= TESTIMONIALS ======================== -->
+      <section class="section" aria-labelledby="tst-title" style="border-top:1px solid var(--line)">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">03</span> &nbsp;— IN THEIR WORDS</span></div>
+            <h2 class="h-lg reveal" id="tst-title">Trusted by<br />the people we work with</h2>
+          </div>
+          <div class="tst reveal" data-tst>
+            <div class="tst__viewport">
+              {{#each testimonials}}
+              <blockquote class="tst__slide{{#if (eq @index 0)}} active{{/if}}" data-tst-slide>
+                <div class="tst__stars" aria-label="{{this.stars}} out of 5 stars">{{repeat this.stars "★"}}</div>
+                <p class="tst__quote">“{{this.quote}}”</p>
+                <footer class="tst__author"><b>{{this.author}}</b></footer>
+              </blockquote>
+              {{/each}}
+            </div>
+            <div class="tst__nav" role="tablist" aria-label="Testimonials">
+              {{#each testimonials}}
+              <button class="tst__dot{{#if (eq @index 0)}} active{{/if}}" data-tst-dot="{{@index}}" aria-label="Show testimonial {{inc @index}}"></button>
+              {{/each}}
+            </div>
           </div>
         </div>
       </section>

@@ -408,6 +408,21 @@ export const productionCredits = {
     'ORA Developers',
     'Pagani Italy Showcase',
   ],
+  // Curated homepage marquee of credits — a 10-title subset of the lists above
+  // (every string is verbatim from `hollywood`/`gcc`). The full lists live on
+  // /portfolio/. This is the AED-500M-tier proof promoted to the top of the page.
+  feature: [
+    'Mission: Impossible – Dead Reckoning Part One',
+    'Star Wars: The Force Awakens',
+    'Sonic the Hedgehog',
+    'Top Gear',
+    'Vikram Vedha',
+    'Bang Bang!',
+    'Al Asouf 3',
+    'Prada Mode Abu Dhabi',
+    'Bentley Flying Spur Hybrid',
+    'Pagani Italy Showcase',
+  ],
 };
 
 /** 10. Leadership Team. */
@@ -512,6 +527,19 @@ export const clients = {
     'GOVERNMENT ENTITIES',
     'PRODUCTION PARTNERS',
   ],
+  // Real client/partner names only — the quiet strip beneath the homepage
+  // credits. Generic role tags ('STUDIOS', 'BROADCASTERS', …) are intentionally
+  // excluded here; the full `tags` list still renders on inner pages.
+  featured: [
+    'PRADA',
+    'BENTLEY',
+    'PAGANI',
+    'DUBAI AIRPORTS',
+    'HONDA',
+    'ORA DEVELOPERS',
+    'BINGHATTI',
+    'GETEX GLOBAL',
+  ],
 };
 
 /**
@@ -523,7 +551,7 @@ export const clients = {
  */
 export const posters = Array.from({ length: 53 }, (_, i) => ({
   src: `/images/posters/poster-${String(i + 1).padStart(2, '0')}.jpg`,
-  alt: 'Production poster from the Over Exposure Productions filmography — Abu Dhabi & the UAE.',
+  alt: `Production poster ${i + 1} of 53 — Over Exposure filmography`,
 }));
 
 export default {

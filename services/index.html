@@ -101,22 +101,26 @@
         </div>
       </section>
 
-      <!-- ========================= WHY OVER EXPOSURE ==================== -->
-      <section class="section" id="why-ox" aria-labelledby="whyox-title">
+      <!-- ========================== WHY ABU DHABI ======================= -->
+      <section class="section" id="why-abu-dhabi" aria-labelledby="whyad-title">
         <div class="wrap">
-          <div class="section__intro">
-            <div class="eyebrow gold"><span class="tc"><span class="g">04</span> &nbsp;— WHY OVER EXPOSURE PRODUCTIONS</span></div>
-            <h2 class="h-lg reveal" id="whyox-title">Clear differentiators</h2>
-            <p class="lead lead--wide mt-2 reveal">{{whyOx.copy}}</p>
-          </div>
-          <div class="whyox reveal">
-            {{#each whyOx.items}}
-            <div class="whyox__cell">
-              <div class="no">{{pad2 @index}}</div>
-              <h3>{{this.title}}</h3>
-              <p>{{this.body}}</p>
+          <div class="whyad__grid">
+            <div class="whyad__media reveal">
+              <div class="big">{{> pic src=whyAbuDhabi.bgPrimary alt="Etihad Towers and the Abu Dhabi waterfront skyline." sizes="(max-width: 900px) 92vw, 46vw"}}</div>
+              <div class="small">{{> pic src=whyAbuDhabi.bgSecondary alt="Close-up of Abu Dhabi's modern towers." sizes="(max-width: 900px) 48vw, 24vw"}}</div>
             </div>
-            {{/each}}
+            <div class="reveal">
+              <div class="eyebrow gold"><span class="tc"><span class="g">04</span> &nbsp;— WHY ABU DHABI</span></div>
+              <h2 class="h-lg">World-class locations,<br /><span class="g">{{whyAbuDhabi.subheading}}</span></h2>
+              <ul class="whyad__bullets">
+                {{#each whyAbuDhabi.bullets}}<li>{{this}}</li>{{/each}}
+              </ul>
+              <div class="callouts">
+                {{#each whyAbuDhabi.stats}}
+                <div class="callout"><b>{{this.value}}</b><span>{{this.label}}</span></div>
+                {{/each}}
+              </div>
+            </div>
           </div>
         </div>
       </section>

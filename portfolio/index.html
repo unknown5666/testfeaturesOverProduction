@@ -23,9 +23,39 @@
         </div>
       </header>
 
-      <!-- ========================= POSTER GRID ========================= -->
-      <section class="section section--tight" aria-label="Filmography poster grid">
+      <!-- ==================== SELECTED PRODUCTION CREDITS =============== -->
+      <section class="section" id="credits" aria-labelledby="credits-title">
         <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">01</span> &nbsp;— SELECTED PRODUCTION CREDITS</span></div>
+            <h2 class="h-lg reveal" id="credits-title">A proven<br />track record</h2>
+            <p class="lead lead--wide mt-2 reveal">{{productionCredits.copy}}</p>
+          </div>
+
+          <div class="credits__cols reveal">
+            <div class="credit-group">
+              <h3>Hollywood &amp; Bollywood</h3>
+              <ul class="credit-list">
+                {{#each productionCredits.hollywood}}<li>{{this}}</li>{{/each}}
+              </ul>
+            </div>
+            <div class="credit-group">
+              <h3>GCC &amp; Commercial Campaigns</h3>
+              <ul class="credit-list">
+                {{#each productionCredits.gcc}}<li>{{this}}</li>{{/each}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= POSTER GRID ========================= -->
+      <section class="section section--tight" aria-labelledby="posters-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">02</span> &nbsp;— FILMOGRAPHY WALL</span></div>
+            <h2 class="h-lg reveal" id="posters-title">Fifty-three<br />productions</h2>
+          </div>
           <div class="poster-grid" data-portfolio>
             {{#each posters}}
             <button

@@ -10,6 +10,7 @@
 
     <nav class="nav__links" aria-label="Primary">
       <a class="nav__link" href="/" {{#if (eq page 'home')}}aria-current="page"{{/if}}>Home</a>
+      <a class="nav__link" href="/company/" {{#if (eq page 'company')}}aria-current="page"{{/if}}>About</a>
       <a class="nav__link" href="/services/" {{#if (eq page 'services')}}aria-current="page"{{/if}}>Services</a>
       <a class="nav__link" href="/portfolio/" {{#if (eq page 'portfolio')}}aria-current="page"{{/if}}>Work</a>
       <a class="nav__link" href="/contact/" {{#if (eq page 'contact')}}aria-current="page"{{/if}}>Contact</a>
@@ -24,12 +25,13 @@
 </header>
 
 <div class="nav-overlay" id="navOverlay" aria-hidden="true">
-  <span class="nav-overlay__eyebrow" aria-hidden="true"><span class="rec-dot"></span>Menu</span>
+  <span class="nav-overlay__eyebrow" aria-hidden="true">Menu</span>
   <nav class="nav-overlay__links" aria-label="Mobile">
     <a class="nav-overlay__link" href="/" {{#if (eq page 'home')}}aria-current="page"{{/if}}><span class="idx">01</span><span class="lbl">Home</span></a>
-    <a class="nav-overlay__link" href="/services/" {{#if (eq page 'services')}}aria-current="page"{{/if}}><span class="idx">02</span><span class="lbl">Services</span></a>
-    <a class="nav-overlay__link" href="/portfolio/" {{#if (eq page 'portfolio')}}aria-current="page"{{/if}}><span class="idx">03</span><span class="lbl">Work</span></a>
-    <a class="nav-overlay__link" href="/contact/" {{#if (eq page 'contact')}}aria-current="page"{{/if}}><span class="idx">04</span><span class="lbl">Contact</span></a>
+    <a class="nav-overlay__link" href="/company/" {{#if (eq page 'company')}}aria-current="page"{{/if}}><span class="idx">02</span><span class="lbl">About</span></a>
+    <a class="nav-overlay__link" href="/services/" {{#if (eq page 'services')}}aria-current="page"{{/if}}><span class="idx">03</span><span class="lbl">Services</span></a>
+    <a class="nav-overlay__link" href="/portfolio/" {{#if (eq page 'portfolio')}}aria-current="page"{{/if}}><span class="idx">04</span><span class="lbl">Work</span></a>
+    <a class="nav-overlay__link" href="/contact/" {{#if (eq page 'contact')}}aria-current="page"{{/if}}><span class="idx">05</span><span class="lbl">Contact</span></a>
   </nav>
   <a class="nav-overlay__cta" href="/contact/">Start a Project<span aria-hidden="true">→</span></a>
   <div class="nav-overlay__foot">

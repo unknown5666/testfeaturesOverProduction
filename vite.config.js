@@ -140,6 +140,21 @@ const pages = {
     preloadImg: '/images/backgrounds/01-hero-ceiling-hallway-1200.webp',
     jsonld: ld(localBusiness, breadcrumb([{ name: 'Home', path: '/' }])),
   },
+  '/company/index.html': {
+    page: 'company',
+    title: 'About | Company Profile & Leadership | Over Exposure Productions',
+    description:
+      'Over Exposure Productions — an Abu Dhabi production and film servicing company. Executive summary, leadership team and future vision behind 50+ international productions across the UAE.',
+    canonical: `${BASE}/company/`,
+    preloadImg: '/images/backgrounds/03-exec-summary-studio-1200.webp',
+    jsonld: ld(
+      localBusiness,
+      breadcrumb([
+        { name: 'Home', path: '/' },
+        { name: 'Company', path: '/company/' },
+      ])
+    ),
+  },
   '/services/index.html': {
     page: 'services',
     title:
@@ -204,6 +219,7 @@ export default defineConfig({
         pad2: (i) => String(i + 1).padStart(2, '0'),
         slugify: (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
         json: (v) => JSON.stringify(v),
+        repeat: (n, ch) => String(ch).repeat(Math.max(0, Number(n) || 0)),
         // Derive next-gen responsive variant paths produced by generate-assets.mjs
         webp: (src, w) => String(src).replace(/\.(jpe?g|png)$/i, `-${w}.webp`),
         webpset: (src) =>
@@ -219,6 +235,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: resolve(__dirname, 'index.html'),
+        company: resolve(__dirname, 'company/index.html'),
         services: resolve(__dirname, 'services/index.html'),
         portfolio: resolve(__dirname, 'portfolio/index.html'),
         contact: resolve(__dirname, 'contact/index.html'),

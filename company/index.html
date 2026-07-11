@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{> head}}
+  </head>
+  <body data-page="company">
+    {{> chrome}}
+    {{> nav}}
+
+    <main>
+      <!-- ============================ HEADER ============================ -->
+      <header class="pagehead">
+        <div class="pagehead__media">
+          {{> pic src=execSummary.bg alt="Professional film studio interior — Over Exposure Productions, Abu Dhabi." eager=true sizes="100vw"}}
+        </div>
+        <div class="pagehead__inner wrap">
+          <nav class="tc" aria-label="Breadcrumb" style="margin-bottom:1.5rem">
+            <a href="/">Home</a> <span class="g">/</span> Company
+          </nav>
+          <div class="eyebrow gold"><span class="tc"><span class="g">·</span> &nbsp;ABOUT OVER EXPOSURE</span></div>
+          <h1 class="h-xl">One Trusted Partner,<br />End to End</h1>
+          <p class="lead pagehead__sub">{{execSummary.copy}}</p>
+        </div>
+      </header>
+
+      <!-- ======================= EXECUTIVE SUMMARY ====================== -->
+      <section class="section" id="summary" aria-labelledby="summary-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">01</span> &nbsp;— EXECUTIVE SUMMARY</span></div>
+            <h2 class="h-lg reveal" id="summary-title">How we<br />deliver</h2>
+          </div>
+          <div class="exec__cols reveal">
+            {{#each execSummary.columns}}
+            <div class="exec__col">
+              <div class="no">{{pad2 @index}}</div>
+              <h3>{{this.title}}</h3>
+              <p>{{this.body}}</p>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== WHY OVER EXPOSURE ========================= -->
+      <section class="section band" id="why-ox" aria-labelledby="whyox-title">
+        <div class="band__bg">{{> pic src=whyOx.bg alt="Film crew working a desert set at golden hour — Over Exposure Productions." sizes="100vw"}}</div>
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">02</span> &nbsp;— WHY OVER EXPOSURE PRODUCTIONS</span></div>
+            <h2 class="h-lg reveal" id="whyox-title">Clear differentiators</h2>
+            <p class="lead lead--wide mt-2 reveal">{{whyOx.copy}}</p>
+          </div>
+          <div class="whyox reveal">
+            {{#each whyOx.items}}
+            <div class="whyox__cell">
+              <div class="no">{{pad2 @index}}</div>
+              <h3>{{this.title}}</h3>
+              <p>{{this.body}}</p>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================== LEADERSHIP ========================= -->
+      <section class="section" id="team" aria-labelledby="team-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">03</span> &nbsp;— LEADERSHIP TEAM</span></div>
+            <h2 class="h-lg reveal" id="team-title">The people<br />behind the work</h2>
+            <p class="lead lead--wide mt-2 reveal">{{team.copy}}</p>
+          </div>
+
+          <div class="team__ceo reveal">
+            <div class="team__ceo-photo">
+              {{> pic src=team.ceo.photo alt="Abdulaziz Al Ali, CEO of Over Exposure Productions." sizes="(max-width: 820px) 70vw, 360px"}}
+            </div>
+            <div>
+              <span class="role">{{team.ceo.role}}</span>
+              <h3>{{team.ceo.name}}</h3>
+              <p>{{team.ceo.bio}}</p>
+            </div>
+          </div>
+
+          <div class="team__row reveal">
+            {{#each team.members}}
+            <article class="exec-card">
+              <div class="exec-card__photo">{{> pic src=this.photo alt=this.name sizes="172px"}}</div>
+              <span class="role">{{this.role}}</span>
+              <h4>{{this.name}}</h4>
+              <p>{{this.bio}}</p>
+            </article>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================== FUTURE VISION ======================= -->
+      <section class="section band" id="future" aria-labelledby="future-title">
+        <div class="band__bg">{{> pic src=futureVision.bg alt="Silhouetted figure in a film studio — the future vision of Over Exposure Productions." sizes="100vw"}}</div>
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">04</span> &nbsp;— FUTURE VISION</span></div>
+            <h2 class="h-lg reveal" id="future-title">Global reach,<br />local impact</h2>
+            <p class="lead lead--wide mt-2 reveal">{{futureVision.copy}}</p>
+          </div>
+          <div class="future__grid reveal">
+            <ul class="future__points">
+              {{#each futureVision.points}}<li>{{this}}</li>{{/each}}
+            </ul>
+            <div class="future__dir">
+              <div class="tc">Strategic Direction</div>
+              <p>{{futureVision.direction}}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== CTA ============================= -->
+      <section class="section cta" aria-labelledby="cta-title">
+        <div class="wrap">
+          <div class="eyebrow gold" style="justify-content:center"><span class="tc"><span class="g">·</span>&nbsp;LET'S ROLL</span></div>
+          <h2 class="h-xl reveal" id="cta-title">Start your production<br />in Abu Dhabi.</h2>
+          <div class="reveal mt-2" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
+            <a class="btn-solid" href="/contact/">Start a Project</a>
+            <a class="btn-ghost" href="/portfolio/">See Our Filmography</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {{> footer}}
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

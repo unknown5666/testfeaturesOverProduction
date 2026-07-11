@@ -19,6 +19,11 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
 let lenis = null;
+/* Hero entrance is chained to the preloader shutter — the shutter's clear IS
+   the hero reveal. initHero() registers the real handler here; the preloader
+   fires it as the panels open (or boot fires it directly when the loader is
+   skipped). Default no-op keeps inner pages safe. */
+let onHeroReveal = () => {};
 
 /* ------------------------------- Lenis ---------------------------------- */
 function initSmoothScroll() {
@@ -37,7 +42,10 @@ function scrollTo(target) {
 function runPreloader() {
   const pre = $('#preloader');
   const shutter = $('#shutter');
-  if (!pre) return Promise.resolve();
+  if (!pre) {
+    onHeroReveal();
+    return Promise.resolve();
+  }
 
   const seen = sessionStorage.getItem('ox_seen');
   const done = () => {
@@ -47,40 +55,72 @@ function runPreloader() {
 
   if (seen || reduceMotion) {
     done();
+    onHeroReveal();
     return Promise.resolve();
   }
 
+  // Build 35mm sprocket-hole perforations — they light up one-by-one as the
+  // "frame" exposes, instead of a solid progress fill.
+  const bar = $('#preBar');
+  const PERFS = 24;
+  const perfs = [];
+  if (bar) {
+    bar.textContent = '';
+    for (let i = 0; i < PERFS; i++) {
+      const s = document.createElement('span');
+      bar.appendChild(s);
+      perfs.push(s);
+    }
+  }
+  const pct = $('#prePct');
+
   return new Promise((resolve) => {
-    const bar = $('#preBar');
-    const pct = $('#prePct');
+    // Idempotent finisher. A failsafe guarantees the loader can NEVER hide the
+    // page — if the rAF ticker is throttled (e.g. a backgrounded tab) and the
+    // GSAP timeline stalls, this still clears the loader and reveals the hero.
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      if (shutter) shutter.style.display = 'none';
+      sessionStorage.setItem('ox_seen', '1');
+      done();
+      onHeroReveal();
+      resolve();
+    };
+    const failsafe = setTimeout(finish, 2500);
+
     const state = { v: 0 };
     const tl = gsap.timeline({
       onComplete: () => {
-        // shutter / exposure wipe
+        // Exposure wipe — the shutter's clear IS the hero entrance. One
+        // continuous timeline: panels snap open (tight stagger + ease-in for a
+        // mechanical leaf-shutter feel) while the tagline mask-reveals beneath.
         shutter.style.display = 'block';
         const panels = $$('#shutter span');
         gsap.set(panels, { transformOrigin: 'top' });
         gsap
           .timeline({
             onComplete: () => {
-              shutter.style.display = 'none';
-              sessionStorage.setItem('ox_seen', '1');
-              resolve();
+              clearTimeout(failsafe);
+              finish();
             },
           })
-          .to(pre, { opacity: 0, duration: 0.3 }, 0)
-          .fromTo(panels, { scaleY: 1 }, { scaleY: 0, duration: 0.6, stagger: 0.04, ease: 'power3.inOut' }, 0.05)
+          .to(pre, { opacity: 0, duration: 0.28 }, 0)
+          .fromTo(panels, { scaleY: 1 }, { scaleY: 0, duration: 0.28, stagger: 0.025, ease: 'power2.in' }, 0)
+          .add(() => onHeroReveal(), 0.1)
           .add(done);
       },
     });
     tl.to(state, {
       v: 100,
-      duration: 1.0,
-      ease: 'power2.inOut',
+      duration: 0.58,
+      ease: 'power2.out',
       onUpdate: () => {
         const val = Math.round(state.v);
-        if (pct) pct.textContent = val + '%';
-        if (bar) bar.style.width = val + '%';
+        if (pct) pct.textContent = String(val).padStart(2, '0') + '%';
+        const lit = Math.round((state.v / 100) * PERFS);
+        for (let i = 0; i < perfs.length; i++) perfs[i].classList.toggle('on', i < lit);
       },
     });
   });
@@ -142,11 +182,11 @@ function initCursor() {
     ring.style.transform = `translate3d(${ring2.x}px, ${ring2.y}px, 0)`;
   });
   const play = (on) => document.body.classList.toggle('cursor-play', on);
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('[data-cursor="play"]')) play(true);
-  });
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('[data-cursor="play"]')) play(false);
+  // Bind enter/leave per target element (not delegated mouseover/mouseout) so
+  // crossing child nodes inside a [data-cursor="play"] target never flickers.
+  $$('[data-cursor="play"]').forEach((el) => {
+    el.addEventListener('mouseenter', () => play(true));
+    el.addEventListener('mouseleave', () => play(false));
   });
 }
 
@@ -178,18 +218,92 @@ function initReveals() {
   setTimeout(() => els.forEach((el) => el.classList.add('is-in')), 4000);
 }
 
+/* ------------------------- Credits cascade ------------------------------ */
+/* S2 signature moment. Each title is its own IO trigger: it rises + fades from
+   behind a clip-mask, alternating L/R (CSS). Pure IO + CSS transition = 60fps
+   on mid-range Android, no scroll-scrubbing. Runs on BOTH platforms. */
+function initCredits() {
+  const items = $$('[data-credit]');
+  if (!items.length) return;
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-in'));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-in');
+        io.unobserve(en.target);
+      }),
+    { rootMargin: '0px 0px -10% 0px', threshold: 0.4 }
+  );
+  items.forEach((el) => io.observe(el));
+  setTimeout(() => items.forEach((el) => el.classList.add('is-in')), 4000);
+}
+
+/* One-shot image entrance (scale 1.08→1 + blur 8→0). Promoted to both
+   platforms — the CSS does the work once `.in` lands; JS only observes. */
+function initImageRise() {
+  const els = $$('.img-rise');
+  if (!els.length) return;
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }),
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.15 }
+  );
+  els.forEach((el) => io.observe(el));
+  setTimeout(() => els.forEach((el) => el.classList.add('in')), 4000);
+}
+
+/* Signature-work video card: tap / click to load & play. The play affordance
+   scales out into the video start; the poster→video swap is a CSS crossfade.
+   Desktop shows the custom "PLAY" cursor ring instead of the button. */
+function initVideoCard() {
+  const card = $('[data-video-card]');
+  if (!card) return;
+  const video = $('.sig__vid', card);
+  if (!video) return;
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    const src = video.querySelector('source[data-src]');
+    if (src && !src.src) {
+      src.src = src.dataset.src;
+      video.load();
+    }
+    card.classList.add('played');
+    const play = () =>
+      video
+        .play()
+        .then(() => video.classList.add('is-playing'))
+        .catch(() => {
+          started = false;
+          card.classList.remove('played');
+        });
+    if (video.readyState >= 2) play();
+    else video.addEventListener('canplay', play, { once: true });
+  };
+  card.addEventListener('click', start);
+}
+
 /* ------------------------------- Hero ----------------------------------- */
 function initHero() {
   const hero = $('#hero');
   if (!hero) return;
 
-  // Headline mask reveal — CSS-transition driven (resilient; the word-swap
-  // rotation is handled entirely in CSS). Staggered class toggles only.
-  const masks = $$('.hero__title .mask', hero);
-  masks.forEach((m, i) => setTimeout(() => m.classList.add('is-in'), 150 + i * 90));
-
   // Lazy hero video. Plays on hover-capable desktops AND on mobile (≤768px) —
   // still skipped for reduced-motion, Save-Data and 2G to keep slow links fast.
+  // The poster→video swap is a 1.2s opacity+scale crossfade (see CSS .is-playing).
   const video = $('#heroVideo');
   const conn = navigator.connection || {};
   const capable = (canHover || isMobile) && !reduceMotion && !conn.saveData && !/2g/.test(conn.effectiveType || '');
@@ -203,6 +317,22 @@ function initHero() {
       else video.addEventListener('canplay', play, { once: true });
     }
   }
+
+  // Register the hero entrance. The preloader shutter fires this as it clears
+  // (first line 100ms after the panels open, 90ms per-line stagger); the
+  // subline then the CTA rise as single blocks behind it.
+  const masks = $$('.hero__title .mask', hero);
+  const subline = $('.hero__subline', hero);
+  const ctaRow = $('.hero__cta-row', hero);
+  let fired = false;
+  onHeroReveal = () => {
+    if (fired) return;
+    fired = true;
+    masks.forEach((m, i) => setTimeout(() => m.classList.add('is-in'), 100 + i * 90));
+    const lastLine = 100 + Math.max(0, masks.length - 1) * 90;
+    setTimeout(() => subline && subline.classList.add('is-in'), lastLine + 300);
+    setTimeout(() => ctaRow && ctaRow.classList.add('is-in'), lastLine + 420);
+  };
 }
 
 /* -------------------------- Services list ------------------------------- */
@@ -291,9 +421,9 @@ function initParallax() {
    reduced motion. Desktop behaviour is untouched. Transform/opacity only,
    plus a one-shot blur on image entrances. */
 
-/* Count-up on the stat numbers when they scroll into view. */
+/* Count-up on the stat numbers when they scroll into view (both platforms). */
 function initCounters() {
-  if (!isMobile || reduceMotion || !('IntersectionObserver' in window)) return;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
   const nums = $$('.stat__n').filter((el) => /\d/.test(el.textContent));
   if (!nums.length) return;
   const run = (el) => {
@@ -415,6 +545,9 @@ async function boot() {
   initReveals();
   initParallax();
   initCounters();
+  initCredits();
+  initImageRise();
+  initVideoCard();
   initMobileMotion();
   initMobileVideos();
 
@@ -423,6 +556,7 @@ async function boot() {
   if ($('[data-contact-form]')) import('./contact.js').then((m) => m.initContact());
 
   await runPreloader();
+  onHeroReveal(); // idempotent — guarantees the hero shows on every path
   ScrollTrigger.refresh();
   // Re-refresh once fonts/late media settle to keep triggers accurate
   window.addEventListener('load', () => ScrollTrigger.refresh());

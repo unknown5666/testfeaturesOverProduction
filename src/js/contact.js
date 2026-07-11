@@ -56,41 +56,41 @@ export function initContact() {
       return;
     }
 
-    const projectType = form.elements.projectType.value || 'General enquiry';
-    const phone = form.elements.phone.value.trim();
+    /* Formspree (serverless) submit — no mailto handoff. The enquiry posts
+       silently in the background; the visitor never sees their mail app open.
+       CONFIGURE: create a free form at https://formspree.io, then set its
+       endpoint on the form as data-endpoint="https://formspree.io/f/XXXXXXX"
+       (see contact/index.html). Until that's set, we don't POST anywhere —
+       we never send enquiry data to an unknown endpoint. */
+    const ENDPOINT = form.dataset.endpoint || '';
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-    /* -------------------------------------------------------------------
-       OPTION A — Formspree / serverless endpoint (recommended for prod).
-       1. Create a form at https://formspree.io (or your own function).
-       2. Put the endpoint URL below and uncomment this block.
-       3. Delete / keep the mailto fallback beneath it as you prefer.
-    ----------------------------------------------------------------------
-    const ENDPOINT = 'https://formspree.io/f/XXXXXXX';
+    if (!/^https:\/\/formspree\.io\/f\/\w+/.test(ENDPOINT)) {
+      status.textContent = 'Thanks — please also reach us at info@ox.productionsuae.com while our form is being connected.';
+      return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
     status.textContent = 'Sending…';
+
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { Accept: 'application/json' },
       body: new FormData(form),
     })
       .then((r) => {
-        if (r.ok) { form.reset(); status.textContent = 'Thanks — we’ll be in touch shortly.'; }
-        else status.textContent = 'Something went wrong. Please email info@ox.productionsuae.com.';
+        if (r.ok) {
+          form.reset();
+          status.textContent = 'Thanks — we’ll be in touch shortly.';
+        } else {
+          status.textContent = 'Something went wrong. Please write to info@ox.productionsuae.com.';
+        }
       })
-      .catch(() => (status.textContent = 'Network error. Please email info@ox.productionsuae.com.'));
-    return;
-    ------------------------------------------------------------------- */
-
-    // OPTION B — mailto: fallback (works with no backend).
-    const subject = `Project enquiry — ${projectType}`;
-    const body =
-      `Name: ${name.value.trim()}\n` +
-      `Email: ${email.value.trim()}\n` +
-      `Phone: ${phone || '—'}\n` +
-      `Project type: ${projectType}\n\n` +
-      `${message.value.trim()}\n`;
-    window.location.href =
-      `mailto:info@ox.productionsuae.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    status.textContent = 'Opening your email app… or write to info@ox.productionsuae.com directly.';
-    form.reset();
+      .catch(() => {
+        status.textContent = 'Network error. Please write to info@ox.productionsuae.com.';
+      })
+      .finally(() => {
+        if (submitBtn) submitBtn.disabled = false;
+      });
   });
 }

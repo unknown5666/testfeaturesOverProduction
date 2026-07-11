@@ -343,24 +343,43 @@ body:not(.cursor-play) .cursor-ring .label {
   margin-top: 1.25rem;
   color: var(--dim);
 }
+.preloader__readout {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.preloader__settings {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--dimmer);
+  white-space: nowrap;
+}
 .preloader__pct {
   font-family: var(--font-mono);
   font-size: var(--step--1);
   letter-spacing: 0.1em;
   color: var(--accent);
 }
+/* Progress bar as a strip of 35mm sprocket perforations (filled by JS). */
 .preloader__bar {
-  height: 1px;
-  background: var(--line);
-  margin-top: 0.75rem;
+  display: flex;
+  gap: 4px;
+  height: 9px;
+  margin-top: 0.9rem;
   width: min(64vw, 360px);
-  overflow: hidden;
 }
-.preloader__bar i {
-  display: block;
+.preloader__bar span {
+  flex: 1;
   height: 100%;
-  width: 0%;
-  background: var(--accent);
+  border-radius: 2px;
+  background: var(--line);
+  opacity: 0.4;
+  transition: opacity 0.18s var(--ease), background 0.18s var(--ease);
+}
+.preloader__bar span.on {
+  background: #e8e6df; /* cool off-white — an exposed frame perforation */
+  opacity: 1;
 }
 /* Shutter wipe panels */
 .preloader__shutter {
@@ -624,10 +643,12 @@ body.menu-open .nav-overlay__link:nth-child(1) .lbl { transition-delay: 0.10s; }
 body.menu-open .nav-overlay__link:nth-child(2) .lbl { transition-delay: 0.17s; }
 body.menu-open .nav-overlay__link:nth-child(3) .lbl { transition-delay: 0.24s; }
 body.menu-open .nav-overlay__link:nth-child(4) .lbl { transition-delay: 0.31s; }
+body.menu-open .nav-overlay__link:nth-child(5) .lbl { transition-delay: 0.38s; }
 body.menu-open .nav-overlay__link:nth-child(1) .idx { transition-delay: 0.22s; }
 body.menu-open .nav-overlay__link:nth-child(2) .idx { transition-delay: 0.29s; }
 body.menu-open .nav-overlay__link:nth-child(3) .idx { transition-delay: 0.36s; }
 body.menu-open .nav-overlay__link:nth-child(4) .idx { transition-delay: 0.43s; }
+body.menu-open .nav-overlay__link:nth-child(5) .idx { transition-delay: 0.50s; }
 .nav-overlay__link:hover,
 .nav-overlay__link:focus-visible,
 .nav-overlay__link[aria-current='page'] { color: var(--accent); }
@@ -2512,4 +2533,321 @@ button.poster:hover img { transform: scale(1.05); }
     70% { box-shadow: 0 0 0 12px rgba(229, 53, 43, 0); }
     100% { box-shadow: 0 0 0 0 rgba(229, 53, 43, 0); }
   }
+}
+
+/* =========================================================================
+   HOMEPAGE 2.0 — five-section restructure (hero · credits · work · statement
+   · closing). Bespoke choreography per section; entrances are transform/
+   opacity + one-shot blur, gated behind `html.js` and reduced-motion so
+   crawlers and reduced-motion users always get a static, complete page.
+   ========================================================================= */
+
+/* Screen-reader-only heading (keeps the credits list under a real h2). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- S1 · Hero tweaks ---------------------------------------------------- */
+.hero__cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Subline + CTA row rise in as blocks after the tagline (JS adds .is-in). */
+html.js .hero__subline,
+html.js .hero__cta-row { opacity: 0; transform: translateY(14px); }
+html.js .hero__subline.is-in { opacity: 1; transform: none; transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+html.js .hero__cta-row.is-in { opacity: 1; transform: none; transition: opacity 0.7s var(--ease) 0.08s, transform 0.7s var(--ease) 0.08s; }
+
+/* Scroll cue → single thin vertical line that draws down and retracts, 2.2s.
+   This is deliberately the ONLY looping element on the page. */
+.hero__scroll {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 24px;
+  background: var(--line-2);
+  position: relative;
+  overflow: hidden;
+}
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: scrollDraw 2.2s var(--ease) infinite;
+}
+@keyframes scrollDraw {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ---- S2 · The Credits (type-led, flat charcoal — first visual rest) ------ */
+.credits { background: var(--bg); }
+.credits__eyebrow {
+  display: flex;
+  align-items: center;
+  margin-bottom: clamp(1.75rem, 3.5vw, 3rem);
+}
+/* The section index numeral "02" is the ONE signal-red element in this block. */
+.credits__eyebrow .idx { color: var(--accent); }
+
+.credits__list { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.credits__item { border-bottom: 1px solid var(--line); }
+.credits__title {
+  display: block;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 10vw, 5.6rem);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  padding: clamp(0.55rem, 1.4vw, 1.05rem) 0;
+}
+@media (min-width: 900px) {
+  .credits__title { font-size: clamp(3rem, 5.6vw, 5.8rem); }
+}
+
+.credits__clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.7rem;
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+  border-top: 1px solid var(--line);
+}
+.credits__client {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* Cascade: each title rises 28px behind a clip-mask, alternating L/R. IO adds
+   .is-in per line (both platforms — the signature scroll moment). */
+html.js .credits__item {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(28px);
+}
+html.js .credits__item:nth-child(odd) { transform: translateY(28px) translateX(-16px); }
+html.js .credits__item:nth-child(even) { transform: translateY(28px) translateX(16px); }
+html.js .credits__item.is-in {
+  opacity: 1;
+  clip-path: inset(0 0 -12% 0);
+  transform: none;
+  transition: opacity 0.8s var(--ease), clip-path 0.8s var(--ease), transform 0.8s var(--ease);
+}
+
+/* ---- S3 · Signature Work (asymmetric, no borders, 4 unique visuals) ------ */
+.sig__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem 2rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.sig__head h2 { margin-top: 0.9rem; }
+.sig__cell { margin: 0; }
+.sig__media { position: relative; overflow: hidden; background: var(--bg-2); }
+.sig__media img { width: 100%; height: 100%; object-fit: cover; }
+.sig__full .sig__media,
+.sig__wide .sig__media { aspect-ratio: 21 / 9; }
+.sig__pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  margin-top: clamp(1rem, 2vw, 1.6rem);
+}
+.sig__wide { margin-top: clamp(1rem, 2vw, 1.6rem); }
+.sig__pair .sig__media { aspect-ratio: 4 / 5; }
+@media (min-width: 820px) {
+  .sig__pair { grid-template-columns: 1fr 1fr; align-items: start; }
+  .sig__right { margin-top: clamp(2rem, 5vw, 4rem); } /* offset pair */
+}
+.sig__cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.8rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(1.05rem, 2.2vw, 1.6rem);
+  color: var(--text);
+}
+.sig__cap .tc { color: var(--dim); }
+
+/* Video card */
+.sig__vid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s var(--ease);
+}
+.sig__vid.is-playing { opacity: 1; }
+.sig__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 12, 14, 0.5);
+  border: 1px solid var(--line-2);
+  color: #fff;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), background 0.3s;
+}
+.sig__play-ico { font-size: 20px; margin-left: 3px; line-height: 1; }
+.sig__play:active { transform: scale(0.9); }
+.sig__video.played .sig__play { transform: scale(0); opacity: 0; pointer-events: none; }
+/* Desktop uses the custom cursor "PLAY" ring instead of the button. */
+@media (hover: hover) and (pointer: fine) {
+  .sig__play { display: none; }
+  .sig__cell:hover .sig__media img { transform: scale(1.03); }
+  .sig__media img { transition: transform 0.35s var(--ease); }
+  .sig__cell:hover .sig__cap { color: var(--text); transform: translateY(-2px); transition: transform 0.35s var(--ease); }
+}
+
+/* One-shot image entrance (scale 1.08→1 + blur 8→0). Promoted to BOTH
+   platforms; gated only by reduced-motion, never on elements over ~70vh. */
+html.js .img-rise .sig__media {
+  opacity: 0;
+  transform: scale(1.08);
+  filter: blur(8px);
+}
+html.js .img-rise.in .sig__media {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+  transition: opacity 0.8s var(--ease), transform 0.85s var(--ease), filter 0.85s var(--ease);
+}
+
+/* ---- S4 · One statement + stats (flat charcoal, generous space) ---------- */
+.statement__copy {
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: none;
+  font-size: clamp(1.55rem, 1rem + 2.9vw, 3rem);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  max-width: 24ch;
+}
+.statement__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--gold-line);
+  border: 1px solid var(--gold-line);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+@media (min-width: 760px) { .statement__stats { grid-template-columns: repeat(4, 1fr); } }
+.statement__stats .stat { position: relative; }
+/* Per-stat underline draw, 80ms cascade (count-up handled in JS, both platforms). */
+html.js .statement__stats .stat::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+html.js .statement__stats.is-in .stat::after { transform: scaleX(1); transition: transform 0.7s var(--ease); }
+html.js .statement__stats.is-in .stat:nth-child(2)::after { transition-delay: 0.08s; }
+html.js .statement__stats.is-in .stat:nth-child(3)::after { transition-delay: 0.16s; }
+html.js .statement__stats.is-in .stat:nth-child(4)::after { transition-delay: 0.24s; }
+
+/* ---- S5 · Closing invitation (minimal) ---------------------------------- */
+.closing__cta-wrap { display: flex; justify-content: center; }
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.cta-link__label { position: relative; padding-bottom: 0.12em; }
+.cta-link__label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+/* One-time underline draw on entrance (not looping). */
+html.js .closing__cta-wrap.is-in .cta-link__label::after {
+  transform: scaleX(1);
+  transition: transform 0.8s var(--ease) 0.2s;
+}
+.cta-link .arrow { color: var(--accent); transition: transform 0.4s var(--ease); }
+.cta-link:hover .arrow { transform: translate(4px, -4px); }
+.cta-link:active { transform: scale(0.98); }
+
+/* ---- Rhythm: flat↔image transitions need more air than like-to-like ------ */
+.sig,
+.statement { padding-top: clamp(6.3rem, 4.2rem + 12.6vw, 15.4rem); }
+
+/* ---- Desktop hover: dim credit siblings on hover (one interaction) -------- */
+@media (hover: hover) and (pointer: fine) {
+  .credits__list:hover .credits__item { opacity: 0.25; transition: opacity 0.3s var(--ease); }
+  .credits__list .credits__item:hover { opacity: 1; }
+}
+
+/* ---- Reduced motion: everything static & fully visible -------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-line::after { animation: none; }
+  html.js .hero__subline,
+  html.js .hero__cta-row,
+  html.js .credits__item,
+  html.js .img-rise .sig__media {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+  }
+  html.js .statement__stats .stat::after,
+  html.js .closing__cta-wrap.is-in .cta-link__label::after { transform: scaleX(1); }
+}
+
+/* ---- Touch feedback layer (mobile flagship) ------------------------------ */
+@media (max-width: 768px) {
+  .btn:active,
+  .cta-link:active,
+  .credits__item:active,
+  .sig__cell:active { transform: scale(0.97); transition: transform 0.15s var(--ease); }
+  /* Native touch scroll on mobile — no Lenis, no scrubbing. */
+  body { overscroll-behavior-y: none; }
 }

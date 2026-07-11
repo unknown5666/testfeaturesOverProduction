@@ -4,9 +4,13 @@
     <div class="preloader__mark"><span data-pre-word>OVER EXPOSURE</span></div>
     <div class="preloader__meta">
       <span class="tc">EXPOSING FRAME</span>
-      <span class="preloader__pct" id="prePct">0%</span>
+      <span class="preloader__readout">
+        <span class="preloader__settings">f/1.4 · 1/48 · ISO 800</span>
+        <span class="preloader__pct" id="prePct">00%</span>
+      </span>
     </div>
-    <div class="preloader__bar"><i id="preBar"></i></div>
+    <!-- 35mm sprocket-hole strip: perforations light up one-by-one (JS). -->
+    <div class="preloader__bar" id="preBar" aria-hidden="true"></div>
   </div>
 </div>
 <div class="preloader__shutter" id="shutter" aria-hidden="true">
