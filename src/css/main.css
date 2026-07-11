@@ -2229,3 +2229,178 @@ button.poster:hover img { transform: scale(1.05); }
   transition: transform 0.55s var(--ease);
 }
 .poster-grid .pf-card:hover img { transform: scale(1.06); filter: none; }
+
+/* =========================================================================
+   MOBILE MOTION LAYER  (≤768px only — desktop is untouched)
+   Re-introduces the cinematic entrances on small screens. Transform/opacity
+   driven, with a one-shot blur on image entrances. Everything that *hides*
+   content is additionally gated to `prefers-reduced-motion: no-preference`
+   so reduced-motion users always see a static, fully-revealed page.
+   ========================================================================= */
+
+/* ---- Background band videos (hero uses a real asset; film-services & future
+   ship poster-only placeholders until a clip is dropped in — see the HTML). -- */
+.band__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: brightness(0.4) grayscale(0.2);
+  transition: opacity 1s var(--ease);
+  pointer-events: none;
+}
+.band__video.is-playing { opacity: 1; }
+
+/* ---- Decorative / layout tweaks (safe regardless of motion pref) ---------- */
+@media (max-width: 768px) {
+  /* Marquee strips run a touch faster on mobile. */
+  .marquee__track { animation-duration: 24s; }
+
+  /* Sticky nav: slide away on scroll-down, return on scroll-up. */
+  .nav {
+    transition: background 0.4s var(--ease-out), border-color 0.4s, backdrop-filter 0.4s, transform 0.45s var(--ease);
+  }
+  .nav.nav-hidden { transform: translateY(-100%); }
+  body.menu-open .nav { transform: none; }
+
+  /* Tap feedback on buttons/CTAs. */
+  .btn-ghost { transition: border-color 0.3s, background 0.3s, color 0.3s, transform 0.18s var(--ease); }
+  .btn:active,
+  .btn-solid:active,
+  .btn-ghost:active { transform: scale(0.97); }
+
+  /* Homepage poster grid → horizontal snap carousel with edge-fade masks.
+     (The full 53-poster portfolio grid keeps its multi-row grid.) */
+  .poster-grid:not([data-portfolio]) {
+    display: flex;
+    grid-template-columns: none;
+    gap: 0.7rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.4rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .poster-grid:not([data-portfolio])::-webkit-scrollbar { display: none; }
+  .poster-grid:not([data-portfolio]) .poster {
+    flex: 0 0 46%;
+    scroll-snap-align: center;
+  }
+
+  /* Team cards → swipeable snap carousel with edge-fade masks. */
+  .team__row {
+    display: flex;
+    grid-template-columns: none;
+    gap: 1.2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.4rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+  .team__row::-webkit-scrollbar { display: none; }
+  .team__row .exec-card {
+    flex: 0 0 72%;
+    scroll-snap-align: center;
+  }
+}
+
+/* ---- Entrance animations (only when motion is welcome) -------------------- */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  /* Snappier, shorter-travel base reveals. */
+  html.js .reveal { transform: translateY(24px); }
+  html.js .reveal.is-in { transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+
+  /* Headings clip-reveal upward. */
+  html.js h1.reveal,
+  html.js h2.reveal {
+    opacity: 1;
+    clip-path: inset(0 0 105% 0);
+    transform: translateY(0.3em);
+  }
+  html.js h1.reveal.is-in,
+  html.js h2.reveal.is-in {
+    clip-path: inset(0 0 -12% 0);
+    transform: translateY(0);
+    transition: clip-path 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+
+  /* Section-number labels: line draws itself, text slides in from the left. */
+  html.js .eyebrow.m-rev::before { transform: scaleX(0); transform-origin: left; }
+  html.js .eyebrow.m-rev > .tc { opacity: 0; transform: translateX(-14px); }
+  html.js .eyebrow.m-rev.m-in::before { transform: scaleX(1); transition: transform 0.6s var(--ease); }
+  html.js .eyebrow.m-rev.m-in > .tc {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s 0.15s var(--ease), transform 0.5s 0.15s var(--ease);
+  }
+
+  /* Full-bleed background images: scale 1.08 → 1 as the section enters. */
+  html.js .band__bg.m-rev img,
+  html.js .pagehead__media.m-rev img { transform: scale(1.08); }
+  html.js .band__bg.m-rev.m-in img,
+  html.js .pagehead__media.m-rev.m-in img { transform: scale(1); transition: transform 1s var(--ease); }
+
+  /* Foreground image blocks: scale + blur → sharp. */
+  html.js .whyad__media.m-rev,
+  html.js .coreserv__media.m-rev,
+  html.js .clients__media.m-rev,
+  html.js .team__ceo-photo.m-rev {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(8px);
+  }
+  html.js .whyad__media.m-rev.m-in,
+  html.js .coreserv__media.m-rev.m-in,
+  html.js .clients__media.m-rev.m-in,
+  html.js .team__ceo-photo.m-rev.m-in {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+    transition: opacity 0.7s var(--ease), transform 0.8s var(--ease), filter 0.8s var(--ease);
+  }
+
+  /* Stats: gold underline sweep (count-up handled in JS). */
+  html.js .statband__grid .stat { position: relative; }
+  html.js .statband__grid .stat::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  html.js .statband__grid.is-in .stat::after {
+    transform: scaleX(1);
+    transition: transform 0.7s var(--ease);
+  }
+  html.js .statband__grid.is-in .stat:nth-child(2)::after { transition-delay: 0.08s; }
+  html.js .statband__grid.is-in .stat:nth-child(3)::after { transition-delay: 0.16s; }
+  html.js .statband__grid.is-in .stat:nth-child(4)::after { transition-delay: 0.24s; }
+
+  /* Pulsing glow on the hero "Start a Production" CTA. */
+  .btn-pulse { position: relative; }
+  .btn-pulse::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: 0 0 0 0 rgba(229, 53, 43, 0.55);
+    animation: btnGlow 2.6s var(--ease) infinite;
+  }
+  @keyframes btnGlow {
+    0% { box-shadow: 0 0 0 0 rgba(229, 53, 43, 0.5); }
+    70% { box-shadow: 0 0 0 12px rgba(229, 53, 43, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(229, 53, 43, 0); }
+  }
+}

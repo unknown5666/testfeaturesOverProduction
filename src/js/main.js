@@ -12,6 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+/* Mobile is driven by viewport width (matchMedia), NOT hover/pointer — emulators
+   and some touch laptops report hover, and the brief scopes mobile work to ≤768px. */
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
@@ -90,7 +93,21 @@ function initNav() {
   const overlay = $('#navOverlay');
 
   // Plain passive scroll listener — reliable (Lenis scrolls the window natively).
-  const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 80);
+  // On mobile the bar also hides on scroll-down / shows on scroll-up.
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    const y = window.scrollY;
+    nav?.classList.toggle('scrolled', y > 80);
+    if (isMobile && !reduceMotion) {
+      const menuOpen = document.body.classList.contains('menu-open');
+      if (menuOpen || y < 120) {
+        nav?.classList.remove('nav-hidden');
+      } else if (Math.abs(y - lastY) > 6) {
+        nav?.classList.toggle('nav-hidden', y > lastY);
+      }
+    }
+    lastY = y;
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -171,10 +188,11 @@ function initHero() {
   const masks = $$('.hero__title .mask', hero);
   masks.forEach((m, i) => setTimeout(() => m.classList.add('is-in'), 150 + i * 90));
 
-  // lazy hero video on capable devices only (keeps mobile/slow fast)
+  // Lazy hero video. Plays on hover-capable desktops AND on mobile (≤768px) —
+  // still skipped for reduced-motion, Save-Data and 2G to keep slow links fast.
   const video = $('#heroVideo');
   const conn = navigator.connection || {};
-  const capable = canHover && !reduceMotion && !conn.saveData && !/2g/.test(conn.effectiveType || '');
+  const capable = (canHover || isMobile) && !reduceMotion && !conn.saveData && !/2g/.test(conn.effectiveType || '');
   if (video && capable) {
     const src = video.querySelector('source[data-src]');
     if (src) {
@@ -252,7 +270,9 @@ function initTestimonials() {
 
 /* ---------------------------- Parallax ---------------------------------- */
 function initParallax() {
-  if (reduceMotion) return;
+  // Heavy scroll-scrubbed parallax is desktop-only; mobile gets lighter
+  // entrance motion instead (see initMobileMotion) to stay smooth at 60fps.
+  if (reduceMotion || isMobile) return;
   $$('[data-parallax], .about__media img, .pagehead__media img, .svc-sec__media img, .deck__bg img, .split__media img').forEach((el) => {
     gsap.fromTo(
       el,
@@ -264,6 +284,110 @@ function initParallax() {
       }
     );
   });
+}
+
+/* ============================ MOBILE MOTION ==============================
+   Everything below is gated to ≤768px (matchMedia) and to no-preference for
+   reduced motion. Desktop behaviour is untouched. Transform/opacity only,
+   plus a one-shot blur on image entrances. */
+
+/* Count-up on the stat numbers when they scroll into view. */
+function initCounters() {
+  if (!isMobile || reduceMotion || !('IntersectionObserver' in window)) return;
+  const nums = $$('.stat__n').filter((el) => /\d/.test(el.textContent));
+  if (!nums.length) return;
+  const run = (el) => {
+    const raw = el.textContent.trim();
+    const target = parseFloat(raw.replace(/[^\d.]/g, ''));
+    const suffix = raw.replace(/[\d.,]/g, ''); // keeps "+", "%", etc.
+    if (!isFinite(target)) return;
+    const dur = 1100;
+    const t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = raw;
+    };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      run(en.target);
+      io.unobserve(en.target);
+    }),
+    { threshold: 0.6 }
+  );
+  nums.forEach((el) => io.observe(el));
+}
+
+/* Entrance treatment for section-number labels (eyebrows, gold line draws
+   itself) and image blocks (scale 1.08→1, blur→sharp). CSS handles the actual
+   transitions once `.m-in` lands; JS only observes. */
+function initMobileMotion() {
+  if (!isMobile || reduceMotion || !('IntersectionObserver' in window)) return;
+  const targets = [
+    ...$$('.eyebrow'),
+    ...$$('.band__bg'),
+    ...$$('.pagehead__media'),
+    ...$$('.whyad__media, .coreserv__media, .clients__media, .team__ceo-photo'),
+  ];
+  if (!targets.length) return;
+  targets.forEach((el) => el.classList.add('m-rev'));
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('m-in');
+      io.unobserve(en.target);
+    }),
+    { rootMargin: '0px 0px -6% 0px', threshold: 0.12 }
+  );
+  targets.forEach((el) => io.observe(el));
+  // Failsafe: never leave anything hidden.
+  setTimeout(() => targets.forEach((el) => el.classList.add('m-in')), 4000);
+}
+
+/* Lazy background videos on mobile (hero + [data-bg-video] sections).
+   preload=none, load+play on intersection, pause off-screen. Missing
+   placeholder files degrade silently to the poster image. */
+function initMobileVideos() {
+  if (!isMobile || reduceMotion) return;
+  const conn = navigator.connection || {};
+  if (conn.saveData || /2g/.test(conn.effectiveType || '')) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  const hero = $('#heroVideo');
+  const bgVideos = $$('[data-bg-video]');
+  const managed = [hero, ...bgVideos].filter(Boolean);
+  if (!managed.length) return;
+
+  const load = (v) => {
+    if (v.dataset.tried) return;
+    v.dataset.tried = '1';
+    const src = v.querySelector('source[data-src]');
+    if (src && !src.src) {
+      src.src = src.dataset.src;
+      v.load();
+    }
+  };
+  const play = (v) => v.play().then(() => v.classList.add('is-playing')).catch(() => {});
+
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((en) => {
+      const v = en.target;
+      if (en.isIntersecting) {
+        load(v);
+        if (v.readyState >= 2) play(v);
+        else v.addEventListener('canplay', () => play(v), { once: true });
+      } else if (!v.paused) {
+        v.pause(); // save cycles off-screen
+      }
+    }),
+    { rootMargin: '10% 0px 10% 0px', threshold: 0.1 }
+  );
+  managed.forEach((v) => io.observe(v));
 }
 
 /* --------------------------- Smooth anchors ----------------------------- */
@@ -290,6 +414,9 @@ async function boot() {
   initAnchors();
   initReveals();
   initParallax();
+  initCounters();
+  initMobileMotion();
+  initMobileVideos();
 
   // Page-specific modules (code-split)
   if ($('[data-portfolio]')) import('./portfolio.js').then((m) => m.initPortfolio({ gsap, lenis, canHover, reduceMotion }));

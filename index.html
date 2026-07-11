@@ -38,7 +38,7 @@
             <div class="hero__foot">
               <div class="reveal" style="display:flex; gap:1rem; flex-wrap:wrap">
                 <a class="btn" href="/portfolio/"><span class="btn__line">View Filmography</span><span class="arrow">↗</span></a>
-                <a class="btn-ghost" href="#contact" data-scroll>Start a Production</a>
+                <a class="btn-ghost btn-pulse" href="#contact" data-scroll>Start a Production</a>
               </div>
             </div>
 
@@ -194,7 +194,14 @@
 
       <!-- ==================== FILM SERVICES & REBATE ==================== -->
       <section class="section band" id="film-services" aria-labelledby="film-title">
-        <div class="band__bg">{{> pic src=filmServices.bg alt="Night desert film shoot lit against the dunes — Abu Dhabi film servicing." sizes="100vw"}}</div>
+        <div class="band__bg">
+          {{> pic src=filmServices.bg alt="Night desert film shoot lit against the dunes — Abu Dhabi film servicing." sizes="100vw"}}
+          <!-- TODO: drop a compressed ~2–4MB, 720p, muted loop at /media/film-services-720.mp4.
+               Poster falls back to the image above; it auto-activates on mobile (see initMobileVideos). -->
+          <video class="band__video" data-bg-video muted loop playsinline preload="none" poster="{{webp filmServices.bg 1200}}" aria-hidden="true">
+            <source data-src="/media/film-services-720.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div class="wrap">
           <div class="section__intro">
             <div class="eyebrow gold"><span class="tc"><span class="g">08</span> &nbsp;— FILM SERVICES &amp; REBATE SUPPORT</span></div>
@@ -301,7 +308,14 @@
 
       <!-- ========================== FUTURE VISION ======================= -->
       <section class="section band" id="future" aria-labelledby="future-title">
-        <div class="band__bg">{{> pic src=futureVision.bg alt="Silhouetted figure in a film studio — the future vision of Over Exposure Productions." sizes="100vw"}}</div>
+        <div class="band__bg">
+          {{> pic src=futureVision.bg alt="Silhouetted figure in a film studio — the future vision of Over Exposure Productions." sizes="100vw"}}
+          <!-- TODO: drop a compressed ~2–4MB, 720p, muted loop at /media/future-vision-720.mp4.
+               Poster falls back to the image above; it auto-activates on mobile (see initMobileVideos). -->
+          <video class="band__video" data-bg-video muted loop playsinline preload="none" poster="{{webp futureVision.bg 1200}}" aria-hidden="true">
+            <source data-src="/media/future-vision-720.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div class="wrap">
           <div class="section__intro">
             <div class="eyebrow gold"><span class="tc"><span class="g">12</span> &nbsp;— FUTURE VISION</span></div>

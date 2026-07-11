@@ -71,7 +71,14 @@
 
       <!-- ==================== FILM SERVICES & REBATE ==================== -->
       <section class="section band" id="film-services" aria-labelledby="film-title">
-        <div class="band__bg">{{> pic src=filmServices.bg alt="Night desert film shoot lit against the dunes — Abu Dhabi film servicing." sizes="100vw"}}</div>
+        <div class="band__bg">
+          {{> pic src=filmServices.bg alt="Night desert film shoot lit against the dunes — Abu Dhabi film servicing." sizes="100vw"}}
+          <!-- TODO: drop a compressed ~2–4MB, 720p, muted loop at /media/film-services-720.mp4.
+               Poster falls back to the image above; it auto-activates on mobile (see initMobileVideos). -->
+          <video class="band__video" data-bg-video muted loop playsinline preload="none" poster="{{webp filmServices.bg 1200}}" aria-hidden="true">
+            <source data-src="/media/film-services-720.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div class="wrap">
           <div class="section__intro">
             <div class="eyebrow gold"><span class="tc"><span class="g">03</span> &nbsp;— FILM SERVICES &amp; REBATE SUPPORT</span></div>
