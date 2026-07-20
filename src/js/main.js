@@ -558,8 +558,60 @@ function initAnchors() {
   });
 }
 
+/* --------------------------- Global UI (all pages) ----------------------
+   Cookie/data-consent banner reveal + accept. The floating WhatsApp button
+   and the access gate are self-contained (CSS + inline script); this only
+   drives the consent banner. */
+function initGlobalUI() {
+  const banner = $('#ox-cookie');
+  if (!banner) return;
+  const KEY = 'ox_cookie_consent';
+  let consented = false;
+  try { consented = localStorage.getItem(KEY) === 'accepted'; } catch (e) {}
+  if (consented) return;
+
+  const reveal = () => {
+    if (document.documentElement.classList.contains('gate-locked')) return;
+    banner.hidden = false;
+    requestAnimationFrame(() => banner.classList.add('is-in'));
+  };
+  const accept = () => {
+    try { localStorage.setItem(KEY, 'accepted'); } catch (e) {}
+    banner.classList.remove('is-in');
+    setTimeout(() => { banner.hidden = true; }, 400);
+  };
+  banner.querySelector('.ox-cookie__accept')?.addEventListener('click', accept);
+
+  // Don't surface the banner over the access gate — wait for unlock.
+  if (document.documentElement.classList.contains('gate-locked')) {
+    document.addEventListener('ox:unlocked', () => setTimeout(reveal, 600), { once: true });
+  } else {
+    setTimeout(reveal, 900);
+  }
+}
+
+/* --------------------------- Locations filter --------------------------- */
+function initLocations() {
+  const bar = $('#locFilter');
+  if (!bar) return;
+  const cats = $$('.loc-cat');
+  bar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.loc-filter__btn');
+    if (!btn) return;
+    const f = btn.dataset.filter;
+    $$('.loc-filter__btn', bar).forEach((b) => b.classList.toggle('is-active', b === btn));
+    cats.forEach((c) => {
+      c.style.display = f === 'all' || c.dataset.cat === f ? '' : 'none';
+    });
+    if (lenis) lenis.resize();
+    ScrollTrigger.refresh();
+  });
+}
+
 /* ------------------------------- Boot ----------------------------------- */
 async function boot() {
+  initGlobalUI();
+  initLocations();
   initSmoothScroll();
   initNav();
   initCursor();

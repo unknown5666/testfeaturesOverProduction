@@ -25,6 +25,48 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ox.productionsuae.com/locations/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ox.productionsuae.com/locations/corniche-towers/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ox.productionsuae.com/locations/yas-marina-skyline/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ox.productionsuae.com/locations/cultural-hall/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ox.productionsuae.com/locations/saadiyat-shoreline-villa/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ox.productionsuae.com/locations/al-maryah-residence/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ox.productionsuae.com/locations/desert-retreat-villa/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://ox.productionsuae.com/contact/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>yearly</changefreq>

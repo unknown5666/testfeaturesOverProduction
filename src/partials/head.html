@@ -2,7 +2,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script>
   document.documentElement.classList.add('js');
+  /* Access gate — lock the site before first paint if this session hasn't
+     unlocked yet. Adding the class synchronously in <head> means the gate
+     overlay (in chrome.html) covers the page with zero content flash. */
+  (function () {
+    try { if (sessionStorage.getItem('ox_gate') === 'open') return; } catch (e) {}
+    document.documentElement.classList.add('gate-locked');
+  })();
 </script>
+<style>
+  /* Critical, framework-independent gate styles so it paints correctly even
+     before main.css loads. Full styling lives in main.css. */
+  #ox-gate { display: none; }
+  html.gate-locked #ox-gate {
+    display: flex; position: fixed; inset: 0; z-index: 2147483000;
+    align-items: center; justify-content: center; background: #0b0c0e;
+  }
+  html.gate-locked body { overflow: hidden; }
+</style>
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0B0C0E" />
 

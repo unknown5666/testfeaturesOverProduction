@@ -1,0 +1,47 @@
+<!-- Location detail — rendered per-location from `location` context (vite pages). -->
+<article class="locd" data-reveal-root>
+  <header class="locd-hero">
+    <div class="locd-hero__media">
+      {{> pic src=location.bg alt=location.intro eager=true sizes="100vw"}}
+    </div>
+    <div class="locd-hero__inner wrap">
+      <a class="locd-back" href="/locations/"><span aria-hidden="true">←</span> All Locations</a>
+      <span class="locd-hero__tag"><span class="rec-dot"></span>&nbsp;{{location.category}} · {{location.area}}</span>
+      <h1 class="locd-hero__title">{{location.name}}</h1>
+      <p class="locd-hero__sub">{{location.intro}}</p>
+    </div>
+  </header>
+
+  <section class="wrap locd-layout">
+    <div class="locd-body">
+      {{#each location.body}}<p>{{this}}</p>{{/each}}
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+        <a class="btn-solid" href="/contact/">Enquire About This Location</a>
+        <a class="btn-ghost" href="/locations/">Browse More Locations</a>
+      </div>
+    </div>
+    <aside class="locd-facts">
+      <h3>Location Facts</h3>
+      <dl>
+        {{#each location.facts}}<dt>{{this.[0]}}</dt><dd>{{this.[1]}}</dd>{{/each}}
+      </dl>
+      <div class="locd-tags">
+        {{#each location.tags}}<span>{{this}}</span>{{/each}}
+      </div>
+    </aside>
+  </section>
+
+  <section class="wrap locd-gallery">
+    <div class="locd-gallery__head">
+      <div class="eyebrow gold"><span class="tc"><span class="g">·</span>&nbsp;EXPANDED GALLERY</span></div>
+      <h2 class="h-lg">Inside {{location.name}}</h2>
+    </div>
+    <div class="locd-grid">
+      {{#each location.gallery}}
+      <figure class="locd-shot {{this.span}}{{#if this.tall}} tall{{/if}}">
+        {{> pic src=this.src alt=this.alt sizes="(max-width: 900px) 50vw, 40vw"}}
+      </figure>
+      {{/each}}
+    </div>
+  </section>
+</article>

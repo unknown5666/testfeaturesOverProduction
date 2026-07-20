@@ -24,6 +24,7 @@ import {
   futureVision,
   clients,
   posters,
+  locations,
 } from './src/data/content.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -129,6 +130,12 @@ const shared = {
   clients,
   posters,
   postersPreview: posters.slice(0, 12),
+  locations,
+  // Locations grouped by category for the gallery view.
+  locationsView: locations.categories.map((c) => ({
+    ...c,
+    items: locations.items.filter((i) => i.category === c.name),
+  })),
   ogImage: OG,
   googleVerify: GOOGLE_VERIFY,
   year: new Date().getFullYear(),
@@ -203,6 +210,48 @@ const pages = {
       ])
     ),
   },
+  '/locations/index.html': {
+    page: 'locations',
+    title: 'Abu Dhabi Filming Locations | Modern Architecture & Villas | Over Exposure Productions',
+    description:
+      'A curated, permit-ready library of Abu Dhabi filming locations — modern architecture, towers, marina skylines and premium beachfront, urban and desert villas, scouted and serviced by Over Exposure Productions.',
+    canonical: `${BASE}/locations/`,
+    preloadImg: '/images/backgrounds/04-work-categories-skyline-sunset-1200.webp',
+    jsonld: ld(
+      breadcrumb([
+        { name: 'Home', path: '/' },
+        { name: 'Locations', path: '/locations/' },
+      ])
+    ),
+  },
+  ...Object.fromEntries(
+    locations.items.map((loc) => [
+      `/locations/${loc.slug}/index.html`,
+      {
+        page: 'locations',
+        location: loc,
+        title: `${loc.name} — ${loc.category} | Abu Dhabi Filming Location | Over Exposure Productions`,
+        description: loc.intro,
+        canonical: `${BASE}/locations/${loc.slug}/`,
+        preloadImg: String(loc.bg).replace(/\.(jpe?g|png)$/i, '-1200.webp'),
+        jsonld: ld(
+          breadcrumb([
+            { name: 'Home', path: '/' },
+            { name: 'Locations', path: '/locations/' },
+            { name: loc.name, path: `/locations/${loc.slug}/` },
+          ])
+        ),
+      },
+    ])
+  ),
+  '/privacy/index.html': {
+    page: 'privacy',
+    title: 'Privacy Policy | Over Exposure Productions',
+    description:
+      'How Over Exposure Productions collects, uses and stores your data — contact enquiries, cookies and your privacy choices, in plain language.',
+    canonical: `${BASE}/privacy/`,
+    robots: 'noindex, follow',
+  },
   '/404.html': {
     page: '404',
     title: 'Scene Missing — 404 | Over Exposure Productions',
@@ -244,7 +293,16 @@ export default defineConfig({
         services: resolve(__dirname, 'services/index.html'),
         portfolio: resolve(__dirname, 'portfolio/index.html'),
         contact: resolve(__dirname, 'contact/index.html'),
+        privacy: resolve(__dirname, 'privacy/index.html'),
+        locations: resolve(__dirname, 'locations/index.html'),
         notfound: resolve(__dirname, '404.html'),
+        // Per-location detail pages (build-time static routes).
+        ...Object.fromEntries(
+          locations.items.map((loc) => [
+            `location-${loc.slug}`,
+            resolve(__dirname, `locations/${loc.slug}/index.html`),
+          ])
+        ),
       },
     },
   },

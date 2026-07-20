@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{> head}}
+  </head>
+  <body data-page="privacy">
+    {{> chrome}}
+    {{> nav}}
+
+    <main>
+      <header class="pagehead">
+        <div class="pagehead__inner wrap">
+          <nav class="tc" aria-label="Breadcrumb" style="margin-bottom:1.5rem">
+            <a href="/">Home</a> <span class="g">/</span> Privacy Policy
+          </nav>
+          <div class="eyebrow gold"><span class="tc"><span class="g">·</span>&nbsp;DATA &amp; PRIVACY</span></div>
+          <h1 class="h-xl">Privacy Policy</h1>
+          <p class="lead lead--wide">How Over Exposure Productions collects, uses and stores your data — in plain language.</p>
+        </div>
+      </header>
+
+      <section class="section" style="padding-top:0">
+        <div class="wrap legal" style="max-width:52rem">
+          <p class="tc" style="color:var(--dim)">Last updated: {{year}}</p>
+
+          <h2 class="h-lg" style="margin-top:2rem">1. Who we are</h2>
+          <p>Over Exposure Productions (“we”, “us”) is a production and film-servicing company based at
+            {{site.address.line1}}, {{site.address.line2}}. This policy explains what data we collect through this
+            website and how we handle it. Questions? Email
+            <a href="mailto:{{site.email}}">{{site.email}}</a>.</p>
+
+          <h2 class="h-lg" style="margin-top:2rem">2. What we collect</h2>
+          <ul class="stack-sm" style="color:var(--dim); line-height:1.7">
+            <li><strong style="color:var(--text)">Information you give us.</strong> When you submit the contact form we
+              receive your name, email, phone (if provided), project type and message.</li>
+            <li><strong style="color:var(--text)">Cookies &amp; local storage.</strong> We use essential browser storage to
+              remember your cookie choice and to keep this preview session unlocked. We may use limited, aggregate
+              analytics to understand how the site is used.</li>
+            <li><strong style="color:var(--text)">Technical data.</strong> Standard server logs (IP address, browser type,
+              pages visited) are recorded by our host for security and performance.</li>
+          </ul>
+
+          <h2 class="h-lg" style="margin-top:2rem">3. How we use it</h2>
+          <p>We use your information solely to respond to enquiries, provide and improve our services, and keep the site
+            secure. We do <strong style="color:var(--text)">not</strong> sell your personal data, and we do not use it for
+            third-party advertising.</p>
+
+          <h2 class="h-lg" style="margin-top:2rem">4. How we store it</h2>
+          <p>Contact enquiries are delivered to <a href="mailto:{{site.email}}">{{site.email}}</a> and a backup copy is
+            stored on our host in a location that is never served publicly. Data is retained only as long as needed to
+            handle your enquiry and meet legal obligations, then deleted. Reasonable technical and organisational measures
+            protect it against loss or unauthorised access.</p>
+
+          <h2 class="h-lg" style="margin-top:2rem">5. Cookies &amp; your choices</h2>
+          <p>When you click <strong style="color:var(--text)">Accept</strong> on our consent banner, we store that choice in
+            your browser so we don’t ask again. Essential storage needed to run the site cannot be switched off, but you can
+            clear cookies and local storage at any time from your browser settings. Declining non-essential analytics will
+            not affect your ability to use the site.</p>
+
+          <h2 class="h-lg" style="margin-top:2rem">6. Your rights</h2>
+          <p>You may request access to, correction of, or deletion of the personal data we hold about you. To do so, contact
+            us at <a href="mailto:{{site.email}}">{{site.email}}</a> and we will respond within a reasonable period.</p>
+
+          <h2 class="h-lg" style="margin-top:2rem">7. Changes to this policy</h2>
+          <p>We may update this policy from time to time. Material changes will be reflected by the “last updated” date
+            above.</p>
+
+          <div style="margin-top:2.5rem; display:flex; gap:1rem; flex-wrap:wrap">
+            <a class="btn-solid" href="/contact/">Contact Us</a>
+            <a class="btn-ghost" href="/">Back to Home</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {{> footer}}
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

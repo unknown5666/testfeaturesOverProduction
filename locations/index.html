@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{> head}}
+  </head>
+  <body data-page="locations">
+    {{> chrome}}
+    {{> nav}}
+
+    <main>
+      <!-- ============================ HERO ============================ -->
+      <header class="loc-hero">
+        <div class="loc-hero__media">
+          {{> pic src=locations.hero.bg alt="Abu Dhabi skyline at sunset — Over Exposure Productions location library." eager=true sizes="100vw"}}
+        </div>
+        <div class="loc-hero__inner wrap">
+          <div class="eyebrow gold"><span class="tc"><span class="g">·</span>&nbsp;{{locations.hero.eyebrow}}</span></div>
+          <h1 class="loc-hero__title">{{locations.hero.title}}</h1>
+          <p class="loc-hero__lead">{{locations.hero.lead}}</p>
+        </div>
+      </header>
+
+      <section class="section" style="padding-top:0">
+        <div class="wrap">
+          <!-- Category filter -->
+          <div class="loc-filter" id="locFilter" role="tablist" aria-label="Filter locations by category">
+            <button class="loc-filter__btn is-active" type="button" data-filter="all">All Locations</button>
+            {{#each locationsView}}
+            <button class="loc-filter__btn" type="button" data-filter="{{this.slug}}">{{this.name}}</button>
+            {{/each}}
+          </div>
+
+          <!-- Category groups -->
+          {{#each locationsView}}
+          <div class="loc-cat" data-cat="{{this.slug}}">
+            <div class="loc-cat__head">
+              <h2 class="loc-cat__title">{{this.name}}</h2>
+              <span class="loc-cat__count">{{this.items.length}} locations</span>
+            </div>
+            <p class="loc-hero__lead" style="font-size:var(--step-0); color:var(--dim); max-width:46rem; margin-bottom:1.5rem">{{this.blurb}}</p>
+            <div class="loc-grid">
+              {{#each this.items}}
+              <a class="loc-card" href="/locations/{{this.slug}}/">
+                <div class="loc-card__media">
+                  {{> pic src=this.bg alt=this.intro sizes="(max-width: 700px) 100vw, 33vw"}}
+                </div>
+                <div class="loc-card__body">
+                  <span class="loc-card__tag"><span class="rec-dot"></span>&nbsp;{{this.type}}</span>
+                  <div class="loc-card__name">{{this.name}}</div>
+                  <div class="loc-card__meta">{{this.area}}</div>
+                  <span class="loc-card__cta">View Location <span aria-hidden="true">↗</span></span>
+                </div>
+              </a>
+              {{/each}}
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </section>
+
+      <!-- ============================ CTA ============================ -->
+      <section class="section cta">
+        <div class="wrap">
+          <div class="eyebrow gold" style="justify-content:center"><span class="tc"><span class="rec-dot"></span>&nbsp;LET'S ROLL</span></div>
+          <h2 class="h-xl reveal" id="cta-title">Scout your Abu Dhabi<br />location with us.</h2>
+          <div class="reveal mt-2" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
+            <a class="btn-solid" href="/contact/">Start a Project</a>
+            <a class="btn-ghost" href="/services/">See Our Services</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {{> footer}}
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

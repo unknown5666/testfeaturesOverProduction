@@ -25,3 +25,75 @@
 <!-- Custom cursor (desktop only; hidden via CSS on touch) -->
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="label"></span></div>
+
+<!-- ================= Access gate (client-side soft gate) ==================
+     Gated before paint by the head.js `gate-locked` class. This is a light
+     access screen, NOT cryptographic security — the markup ships to the client.
+     Correct code opens the gate for the session (sessionStorage). -->
+<div id="ox-gate" role="dialog" aria-modal="true" aria-labelledby="ox-gate-title">
+  <div class="ox-gate__panel" id="ox-gate-panel">
+    <span class="ox-gate__eyebrow tc"><span class="rec-dot"></span>&nbsp;RESTRICTED · PRIVATE PREVIEW</span>
+    <h2 class="ox-gate__title" id="ox-gate-title">Enter access code</h2>
+    <p class="ox-gate__sub">This site is a private preview for Over Exposure Productions. Enter your access code to continue.</p>
+    <form class="ox-gate__form" id="ox-gate-form" autocomplete="off" novalidate>
+      <input class="ox-gate__input" id="ox-gate-input" type="password" inputmode="numeric"
+             aria-label="Access code" placeholder="• • • •" maxlength="16" />
+      <button class="ox-gate__btn" type="submit">Enter <span class="arrow" aria-hidden="true">↗</span></button>
+    </form>
+    <p class="ox-gate__error" id="ox-gate-error" role="alert" hidden>Incorrect access code — try again.</p>
+  </div>
+</div>
+<script>
+  /* Self-contained unlock handler — inline so the gate works even if the main
+     bundle fails to load. Code lives here only client-side (soft gate). */
+  (function () {
+    var CODE = '753';
+    var root = document.documentElement;
+    var form = document.getElementById('ox-gate-form');
+    var input = document.getElementById('ox-gate-input');
+    var err = document.getElementById('ox-gate-error');
+    var panel = document.getElementById('ox-gate-panel');
+    if (!form || !root.classList.contains('gate-locked')) return;
+    setTimeout(function () { try { input.focus(); } catch (e) {} }, 80);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value.trim() === CODE) {
+        try { sessionStorage.setItem('ox_gate', 'open'); } catch (e2) {}
+        root.classList.remove('gate-locked');
+        root.classList.add('gate-open');
+        try { document.dispatchEvent(new Event('ox:unlocked')); } catch (e3) {}
+      } else {
+        if (err) err.hidden = false;
+        input.value = '';
+        try { input.focus(); } catch (e4) {}
+        if (panel) { panel.classList.add('is-shake'); setTimeout(function () { panel.classList.remove('is-shake'); }, 420); }
+      }
+    });
+  })();
+</script>
+
+<!-- ===================== Floating WhatsApp chat ==========================
+     Direct chat with Khaled (+971 55 556537) via the wa.me API. -->
+<a id="ox-wa" class="ox-wa" href="https://wa.me/97155556537?text=Hi%20Khaled%2C%20I%27d%20like%20to%20talk%20about%20a%20production%20with%20Over%20Exposure%20Productions."
+   target="_blank" rel="noopener" aria-label="Chat with Khaled on WhatsApp">
+  <span class="ox-wa__pulse" aria-hidden="true"></span>
+  <svg class="ox-wa__icon" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M16.02 3.2c-7.06 0-12.8 5.73-12.8 12.79 0 2.25.59 4.45 1.71 6.39L3.2 28.8l6.6-1.72a12.76 12.76 0 0 0 6.2 1.58h.01c7.06 0 12.79-5.73 12.79-12.79 0-3.42-1.33-6.63-3.75-9.05a12.7 12.7 0 0 0-9.03-3.62zm0 23.31h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.02 1.05 1.07-3.92-.25-.4a10.53 10.53 0 0 1-1.62-5.64c0-5.86 4.77-10.63 10.64-10.63 2.84 0 5.51 1.11 7.52 3.12a10.55 10.55 0 0 1 3.11 7.52c0 5.87-4.77 10.63-10.63 10.63zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.58-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.53-.71-.54l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.43 5.45 4.81.76.33 1.35.52 1.82.67.76.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.38.19-1.52-.08-.13-.29-.21-.61-.37z"/>
+  </svg>
+  <span class="ox-wa__tip">Chat with Khaled</span>
+</a>
+
+<!-- ===================== Cookie / data consent banner ====================
+     Strict two-option banner: Accept or Learn More (routes to Privacy Policy). -->
+<div id="ox-cookie" class="ox-cookie" role="region" aria-label="Cookie and data consent" hidden>
+  <div class="ox-cookie__inner">
+    <p class="ox-cookie__text">
+      We use essential cookies and limited analytics to operate this site and understand how it's used.
+      Read how we collect and store data in our <a href="/privacy/">Privacy&nbsp;Policy</a>.
+    </p>
+    <div class="ox-cookie__actions">
+      <a class="ox-cookie__learn" href="/privacy/">Learn More</a>
+      <button class="ox-cookie__accept" type="button">Accept</button>
+    </div>
+  </div>
+</div>
