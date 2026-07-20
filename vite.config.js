@@ -29,6 +29,10 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BASE = site.baseUrl;
 const OG = `${BASE}/assets/og-default.jpg`;
+// Google Search Console verification token (meta-tag method). Paste the value
+// from Search Console → Settings → Ownership verification → HTML tag (the
+// content="..." part only). Leave empty to omit the tag.
+const GOOGLE_VERIFY = '';
 
 /* ----------------------------- JSON-LD blocks ---------------------------- */
 const localBusiness = {
@@ -126,6 +130,7 @@ const shared = {
   posters,
   postersPreview: posters.slice(0, 12),
   ogImage: OG,
+  googleVerify: GOOGLE_VERIFY,
   year: new Date().getFullYear(),
 };
 
