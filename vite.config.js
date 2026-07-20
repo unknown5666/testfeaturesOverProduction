@@ -216,7 +216,7 @@ const pages = {
     description:
       'A curated, permit-ready library of Abu Dhabi filming locations — modern architecture, towers, marina skylines and premium beachfront, urban and desert villas, scouted and serviced by Over Exposure Productions.',
     canonical: `${BASE}/locations/`,
-    preloadImg: '/images/backgrounds/04-work-categories-skyline-sunset-1200.webp',
+    preloadImg: '/images/locations/ad-skyline-1200.webp',
     jsonld: ld(
       breadcrumb([
         { name: 'Home', path: '/' },
