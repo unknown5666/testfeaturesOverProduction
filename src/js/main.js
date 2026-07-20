@@ -27,7 +27,8 @@ let onHeroReveal = () => {};
 
 /* ------------------------------- Lenis ---------------------------------- */
 function initSmoothScroll() {
-  if (reduceMotion) return;
+  // Native touch scroll on mobile — no Lenis, no rAF scroll loop (see CSS ≤768px).
+  if (reduceMotion || isMobile) return;
   lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
@@ -57,6 +58,30 @@ function runPreloader() {
     done();
     onHeroReveal();
     return Promise.resolve();
+  }
+
+  // Mobile: the hero already paints in its final position underneath (see CSS
+  // ≤768px), so the loader is a quick decorative wipe — no progress-bar dwell.
+  // Reveals in ~0.3s instead of ~0.9s, which is what LCP/Speed Index wait on.
+  if (isMobile) {
+    return new Promise((resolve) => {
+      const finishM = () => {
+        if (shutter) shutter.style.display = 'none';
+        sessionStorage.setItem('ox_seen', '1');
+        done();
+        onHeroReveal();
+        resolve();
+      };
+      const failsafeM = setTimeout(finishM, 1200);
+      const panels = $$('#shutter span');
+      shutter.style.display = 'block';
+      gsap.set(panels, { transformOrigin: 'top' });
+      gsap
+        .timeline({ onComplete: () => { clearTimeout(failsafeM); finishM(); } })
+        .to(pre, { opacity: 0, duration: 0.22 }, 0)
+        .fromTo(panels, { scaleY: 1 }, { scaleY: 0, duration: 0.26, stagger: 0.018, ease: 'power2.in' }, 0.04)
+        .add(() => onHeroReveal(), 0.02);
+    });
   }
 
   // Build 35mm sprocket-hole perforations — they light up one-by-one as the

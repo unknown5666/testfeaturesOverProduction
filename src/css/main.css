@@ -2861,4 +2861,11 @@ html.js .closing__cta-wrap.is-in .cta-link__label::after {
   .sig__cell:active { transform: scale(0.97); transition: transform 0.15s var(--ease); }
   /* Native touch scroll on mobile — no Lenis, no scrubbing. */
   body { overscroll-behavior-y: none; }
+
+  /* Paint the hero in its final position underneath the decorative shutter, so
+     the LCP tagline is complete the instant the loader clears — no JS-gated
+     translateY hidden state, no staggered per-line reveal inflating Speed Index. */
+  html.js .hero__title .mask > * { transform: translateY(0); }
+  html.js .hero__subline,
+  html.js .hero__cta-row { opacity: 1; transform: none; }
 }
