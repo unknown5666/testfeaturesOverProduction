@@ -21,7 +21,7 @@ export const site = {
   baseUrl: 'https://ox.productionsuae.com',
   email: 'info@ox.productionsuae.com',
   phone: '+97155556537',
-  phoneDisplay: '+971 55 556537',
+  phoneDisplay: '+971 55 556 537',
   contactPerson: 'Khalid Ali',
   address: {
     line1: 'Yas Creative Hub',
