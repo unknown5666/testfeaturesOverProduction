@@ -1,0 +1,5 @@
+# Deny direct web access to log files (defense-in-depth; contact.php also writes
+# its enquiry backup ABOVE the web root, so this is belt-and-suspenders).
+<FilesMatch "\.log$">
+  Require all denied
+</FilesMatch>
