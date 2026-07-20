@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      document.documentElement.classList.add('js');
+      /* Access gate — lock the site before first paint if this session hasn't
+         unlocked yet. Adding the class synchronously in <head> means the gate
+         overlay (in chrome.html) covers the page with zero content flash. */
+      (function () {
+        try { if (sessionStorage.getItem('ox_gate') === 'open') return; } catch (e) {}
+        document.documentElement.classList.add('gate-locked');
+      })();
+    </script>
+    <style>
+      /* Critical, framework-independent gate styles so it paints correctly even
+         before main.css loads. Full styling lives in main.css. */
+      #ox-gate { display: none; }
+      html.gate-locked #ox-gate {
+        display: flex; position: fixed; inset: 0; z-index: 2147483000;
+        align-items: center; justify-content: center; background: #0b0c0e;
+      }
+      html.gate-locked body { overflow: hidden; }
+    </style>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0B0C0E" />
+    
+    <title>Filmography | Selected Production Credits | Over Exposure Productions</title>
+    <meta name="description" content="Selected production credits across Hollywood, Bollywood, GCC content and global commercial campaigns — feature films, series and brand work supported in Abu Dhabi and across the UAE." />
+    <link rel="canonical" href="https://ox.productionsuae.com/portfolio/" />
+    <meta name="robots" content="index, follow" />
+    
+    <meta name="author" content="Over Exposure Productions" />
+    <meta name="generator" content="Over Exposure Productions — bespoke build" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Over Exposure Productions" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Filmography | Selected Production Credits | Over Exposure Productions" />
+    <meta property="og:description" content="Selected production credits across Hollywood, Bollywood, GCC content and global commercial campaigns — feature films, series and brand work supported in Abu Dhabi and across the UAE." />
+    <meta property="og:url" content="https://ox.productionsuae.com/portfolio/" />
+    <meta property="og:image" content="https://ox.productionsuae.com/assets/og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Over Exposure Productions — film & video production, Abu Dhabi, UAE" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Filmography | Selected Production Credits | Over Exposure Productions" />
+    <meta name="twitter:description" content="Selected production credits across Hollywood, Bollywood, GCC content and global commercial campaigns — feature films, series and brand work supported in Abu Dhabi and across the UAE." />
+    <meta name="twitter:image" content="https://ox.productionsuae.com/assets/og-default.jpg" />
+    
+    <!-- Icons / manifest -->
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/assets/site.webmanifest" />
+    
+    <!-- Fonts: self-hosted, preload the two critical faces -->
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/bebas-neue-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-400.woff2" crossorigin />
+    <link rel="preload" as="image" href="/images/backgrounds/09-production-credits-desert-sunset-1200.webp" fetchpriority="high" />
+    
+    <!-- Structured data -->
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ox.productionsuae.com/"},{"@type":"ListItem","position":2,"name":"Portfolio","item":"https://ox.productionsuae.com/portfolio/"}]}</script>
+    <script type="module" crossorigin src="/assets/main-BmDtJPyg.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/style-BauVk51a.css">
+  </head>
+  <body data-page="portfolio">
+    <!-- Preloader: shutter/exposure wipe. Skips instantly on repeat visits (JS). -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader__inner">
+        <div class="preloader__mark"><span data-pre-word>OVER EXPOSURE</span></div>
+        <div class="preloader__meta">
+          <span class="tc">EXPOSING FRAME</span>
+          <span class="preloader__readout">
+            <span class="preloader__settings">f/1.4 · 1/48 · ISO 800</span>
+            <span class="preloader__pct" id="prePct">00%</span>
+          </span>
+        </div>
+        <!-- 35mm sprocket-hole strip: perforations light up one-by-one (JS). -->
+        <div class="preloader__bar" id="preBar" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="preloader__shutter" id="shutter" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    
+    <!-- Atmospheric overlays -->
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    
+    <!-- Custom cursor (desktop only; hidden via CSS on touch) -->
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="label"></span></div>
+    
+    <!-- ================= Access gate (client-side soft gate) ==================
+         Gated before paint by the head.js `gate-locked` class. This is a light
+         access screen, NOT cryptographic security — the markup ships to the client.
+         Correct code opens the gate for the session (sessionStorage). -->
+    <div id="ox-gate" role="dialog" aria-modal="true" aria-labelledby="ox-gate-title">
+      <div class="ox-gate__panel" id="ox-gate-panel">
+        <span class="ox-gate__eyebrow tc"><span class="rec-dot"></span>&nbsp;RESTRICTED · PRIVATE PREVIEW</span>
+        <h2 class="ox-gate__title" id="ox-gate-title">Enter access code</h2>
+        <p class="ox-gate__sub">This site is a private preview for Over Exposure Productions. Enter your access code to continue.</p>
+        <form class="ox-gate__form" id="ox-gate-form" autocomplete="off" novalidate>
+          <input class="ox-gate__input" id="ox-gate-input" type="password" inputmode="numeric"
+                 aria-label="Access code" placeholder="• • • •" maxlength="16" />
+          <button class="ox-gate__btn" type="submit">Enter <span class="arrow" aria-hidden="true">↗</span></button>
+        </form>
+        <p class="ox-gate__error" id="ox-gate-error" role="alert" hidden>Incorrect access code — try again.</p>
+      </div>
+    </div>
+    <script>
+      /* Self-contained unlock handler — inline so the gate works even if the main
+         bundle fails to load. Code lives here only client-side (soft gate). */
+      (function () {
+        var CODE = '753';
+        var root = document.documentElement;
+        var form = document.getElementById('ox-gate-form');
+        var input = document.getElementById('ox-gate-input');
+        var err = document.getElementById('ox-gate-error');
+        var panel = document.getElementById('ox-gate-panel');
+        if (!form || !root.classList.contains('gate-locked')) return;
+        setTimeout(function () { try { input.focus(); } catch (e) {} }, 80);
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (input.value.trim() === CODE) {
+            try { sessionStorage.setItem('ox_gate', 'open'); } catch (e2) {}
+            root.classList.remove('gate-locked');
+            root.classList.add('gate-open');
+            try { document.dispatchEvent(new Event('ox:unlocked')); } catch (e3) {}
+          } else {
+            if (err) err.hidden = false;
+            input.value = '';
+            try { input.focus(); } catch (e4) {}
+            if (panel) { panel.classList.add('is-shake'); setTimeout(function () { panel.classList.remove('is-shake'); }, 420); }
+          }
+        });
+      })();
+    </script>
+    
+    <!-- ===================== Floating WhatsApp chat ==========================
+         Direct chat with Khaled (+971 55 556537) via the wa.me API. -->
+    <a id="ox-wa" class="ox-wa" href="https://wa.me/97155556537?text=Hi%20Khaled%2C%20I%27d%20like%20to%20talk%20about%20a%20production%20with%20Over%20Exposure%20Productions."
+       target="_blank" rel="noopener" aria-label="Chat with Khaled on WhatsApp">
+      <span class="ox-wa__pulse" aria-hidden="true"></span>
+      <svg class="ox-wa__icon" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M16.02 3.2c-7.06 0-12.8 5.73-12.8 12.79 0 2.25.59 4.45 1.71 6.39L3.2 28.8l6.6-1.72a12.76 12.76 0 0 0 6.2 1.58h.01c7.06 0 12.79-5.73 12.79-12.79 0-3.42-1.33-6.63-3.75-9.05a12.7 12.7 0 0 0-9.03-3.62zm0 23.31h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.02 1.05 1.07-3.92-.25-.4a10.53 10.53 0 0 1-1.62-5.64c0-5.86 4.77-10.63 10.64-10.63 2.84 0 5.51 1.11 7.52 3.12a10.55 10.55 0 0 1 3.11 7.52c0 5.87-4.77 10.63-10.63 10.63zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.58-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.53-.71-.54l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.43 5.45 4.81.76.33 1.35.52 1.82.67.76.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.38.19-1.52-.08-.13-.29-.21-.61-.37z"/>
+      </svg>
+      <span class="ox-wa__tip">Chat with Khaled</span>
+    </a>
+    
+    <!-- ===================== Cookie / data consent banner ====================
+         Strict two-option banner: Accept or Learn More (routes to Privacy Policy). -->
+    <div id="ox-cookie" class="ox-cookie" role="region" aria-label="Cookie and data consent" hidden>
+      <div class="ox-cookie__inner">
+        <p class="ox-cookie__text">
+          We use essential cookies and limited analytics to operate this site and understand how it's used.
+          Read how we collect and store data in our <a href="/privacy/">Privacy&nbsp;Policy</a>.
+        </p>
+        <div class="ox-cookie__actions">
+          <a class="ox-cookie__learn" href="/privacy/">Learn More</a>
+          <button class="ox-cookie__accept" type="button">Accept</button>
+        </div>
+      </div>
+    </div>
+    <header class="nav" id="nav">
+      <div class="nav__row">
+        <a class="brand" href="/" aria-label="Over Exposure Productions — home">
+          <img class="brand__mark" src="/assets/logo-mark.png" width="34" height="34" alt="" />
+          <span class="brand__type">
+            <span class="brand__name">Over Exposure</span>
+            <span class="brand__sub">Productions</span>
+            <img class="brand__ar" src="/assets/wordmark-ar.png" width="398" height="38" alt="أوفر اكسبوجر برودكشنز" />
+          </span>
+        </a>
+    
+        <nav class="nav__links" aria-label="Primary">
+          <a class="nav__link" href="/" >Home</a>
+          <a class="nav__link" href="/company/" >About</a>
+          <a class="nav__link" href="/services/" >Services</a>
+          <a class="nav__link" href="/portfolio/" aria-current="page">Work</a>
+          <a class="nav__link" href="/locations/" >Locations</a>
+          <a class="nav__link" href="/contact/" >Contact</a>
+          <span class="nav__rec" aria-hidden="true"><span class="rec-dot"></span>REC</span>
+          <a class="nav__cta" href="/contact/">Start a Project</a>
+        </nav>
+    
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+    
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+      <span class="nav-overlay__eyebrow" aria-hidden="true">Menu</span>
+      <nav class="nav-overlay__links" aria-label="Mobile">
+        <a class="nav-overlay__link" href="/" ><span class="idx">01</span><span class="lbl">Home</span></a>
+        <a class="nav-overlay__link" href="/company/" ><span class="idx">02</span><span class="lbl">About</span></a>
+        <a class="nav-overlay__link" href="/services/" ><span class="idx">03</span><span class="lbl">Services</span></a>
+        <a class="nav-overlay__link" href="/portfolio/" aria-current="page"><span class="idx">04</span><span class="lbl">Work</span></a>
+        <a class="nav-overlay__link" href="/locations/" ><span class="idx">05</span><span class="lbl">Locations</span></a>
+        <a class="nav-overlay__link" href="/contact/" ><span class="idx">06</span><span class="lbl">Contact</span></a>
+      </nav>
+      <a class="nav-overlay__cta" href="/contact/">Start a Project<span aria-hidden="true">→</span></a>
+      <div class="nav-overlay__foot">
+        <a href="mailto:info@ox.productionsuae.com">info@ox.productionsuae.com</a>
+        <a href="tel:+97155556537">+971 55 556537</a>
+        <a href="https://www.instagram.com/ox.pro.ae" target="_blank" rel="noopener">@ox.pro.ae</a>
+      </div>
+    </div>
+
+    <main>
+      <!-- ============================ HEADER ============================ -->
+      <header class="pagehead">
+        <div class="pagehead__media">
+          <picture>
+            <source type="image/webp" srcset="/images/backgrounds/09-production-credits-desert-sunset-480.webp 480w, /images/backgrounds/09-production-credits-desert-sunset-800.webp 800w, /images/backgrounds/09-production-credits-desert-sunset-1200.webp 1200w" sizes="100vw" />
+            <img
+              src="/images/backgrounds/09-production-credits-desert-sunset-1200.webp"
+              alt="Desert film location at sunset — Over Exposure Productions filmography."
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              draggable="false"
+            />
+          </picture>
+        </div>
+        <div class="pagehead__inner wrap">
+          <nav class="tc" aria-label="Breadcrumb" style="margin-bottom:1.5rem">
+            <a href="/">Home</a> <span class="g">/</span> Filmography
+          </nav>
+          <div class="eyebrow gold"><span class="tc"><span class="g">·</span> &nbsp;SELECTED PRODUCTION CREDITS</span></div>
+          <h1 class="h-xl">Proudly Supporting<br />World-Class Productions</h1>
+          <p class="lead pagehead__sub">A selection of feature films, series and campaigns supported in Abu Dhabi and across the UAE — spanning Hollywood, Bollywood, GCC content and global brands. Tap any poster to view it larger.</p>
+        </div>
+      </header>
+
+      <!-- ==================== SELECTED PRODUCTION CREDITS =============== -->
+      <section class="section" id="credits" aria-labelledby="credits-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">01</span> &nbsp;— SELECTED PRODUCTION CREDITS</span></div>
+            <h2 class="h-lg reveal" id="credits-title">A proven<br />track record</h2>
+            <p class="lead lead--wide mt-2 reveal">A proven track record across international film, television, Bollywood, GCC content, and global commercial campaigns — all produced in Abu Dhabi and the UAE.</p>
+          </div>
+
+          <div class="credits__cols reveal">
+            <div class="credit-group">
+              <h3>Hollywood &amp; Bollywood</h3>
+              <ul class="credit-list">
+                <li>Mission: Impossible – Dead Reckoning Part One</li><li>Star Wars: The Force Awakens</li><li>Sonic the Hedgehog</li><li>The Misfits</li><li>Deliver Us From Evil</li><li>Top Gear</li><li>Last Light</li><li>Heropanti 2</li><li>Baby</li><li>Bang Bang!</li><li>Vikram Vedha</li><li>Bloody Daddy</li><li>Race 3</li><li>Bunty Aur Babli 2</li>
+              </ul>
+            </div>
+            <div class="credit-group">
+              <h3>GCC &amp; Commercial Campaigns</h3>
+              <ul class="credit-list">
+                <li>Six Minus One</li><li>Rashash</li><li>Al Asouf 3</li><li>Malh Wa Samra</li><li>Harim Tarek</li><li>Zodi &amp; Tehu</li><li>Honda Pilot</li><li>Bentley Flying Spur Hybrid</li><li>Prada Mode Abu Dhabi</li><li>Dubai Airports / GITEX</li><li>ORA Developers</li><li>Pagani Italy Showcase</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= POSTER GRID ========================= -->
+      <section class="section section--tight" aria-labelledby="posters-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">02</span> &nbsp;— FILMOGRAPHY WALL</span></div>
+            <h2 class="h-lg reveal" id="posters-title">Fifty-three<br />productions</h2>
+          </div>
+          <div class="poster-grid" data-portfolio>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-01-1200.webp"
+              data-alt="Production poster 1 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 1 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-01-480.webp 480w, /images/posters/poster-01-800.webp 800w, /images/posters/poster-01-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-01.jpg"
+                  alt="Production poster 1 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-02-1200.webp"
+              data-alt="Production poster 2 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 2 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-02-480.webp 480w, /images/posters/poster-02-800.webp 800w, /images/posters/poster-02-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-02.jpg"
+                  alt="Production poster 2 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-03-1200.webp"
+              data-alt="Production poster 3 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 3 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-03-480.webp 480w, /images/posters/poster-03-800.webp 800w, /images/posters/poster-03-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-03.jpg"
+                  alt="Production poster 3 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-04-1200.webp"
+              data-alt="Production poster 4 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 4 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-04-480.webp 480w, /images/posters/poster-04-800.webp 800w, /images/posters/poster-04-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-04.jpg"
+                  alt="Production poster 4 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-05-1200.webp"
+              data-alt="Production poster 5 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 5 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-05-480.webp 480w, /images/posters/poster-05-800.webp 800w, /images/posters/poster-05-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-05.jpg"
+                  alt="Production poster 5 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-06-1200.webp"
+              data-alt="Production poster 6 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 6 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-06-480.webp 480w, /images/posters/poster-06-800.webp 800w, /images/posters/poster-06-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-06.jpg"
+                  alt="Production poster 6 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-07-1200.webp"
+              data-alt="Production poster 7 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 7 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-07-480.webp 480w, /images/posters/poster-07-800.webp 800w, /images/posters/poster-07-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-07.jpg"
+                  alt="Production poster 7 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-08-1200.webp"
+              data-alt="Production poster 8 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 8 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-08-480.webp 480w, /images/posters/poster-08-800.webp 800w, /images/posters/poster-08-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-08.jpg"
+                  alt="Production poster 8 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-09-1200.webp"
+              data-alt="Production poster 9 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 9 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-09-480.webp 480w, /images/posters/poster-09-800.webp 800w, /images/posters/poster-09-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-09.jpg"
+                  alt="Production poster 9 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-10-1200.webp"
+              data-alt="Production poster 10 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 10 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-10-480.webp 480w, /images/posters/poster-10-800.webp 800w, /images/posters/poster-10-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-10.jpg"
+                  alt="Production poster 10 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-11-1200.webp"
+              data-alt="Production poster 11 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 11 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-11-480.webp 480w, /images/posters/poster-11-800.webp 800w, /images/posters/poster-11-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-11.jpg"
+                  alt="Production poster 11 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-12-1200.webp"
+              data-alt="Production poster 12 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 12 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-12-480.webp 480w, /images/posters/poster-12-800.webp 800w, /images/posters/poster-12-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-12.jpg"
+                  alt="Production poster 12 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-13-1200.webp"
+              data-alt="Production poster 13 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 13 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-13-480.webp 480w, /images/posters/poster-13-800.webp 800w, /images/posters/poster-13-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-13.jpg"
+                  alt="Production poster 13 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-14-1200.webp"
+              data-alt="Production poster 14 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 14 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-14-480.webp 480w, /images/posters/poster-14-800.webp 800w, /images/posters/poster-14-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-14.jpg"
+                  alt="Production poster 14 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-15-1200.webp"
+              data-alt="Production poster 15 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 15 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-15-480.webp 480w, /images/posters/poster-15-800.webp 800w, /images/posters/poster-15-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-15.jpg"
+                  alt="Production poster 15 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-16-1200.webp"
+              data-alt="Production poster 16 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 16 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-16-480.webp 480w, /images/posters/poster-16-800.webp 800w, /images/posters/poster-16-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-16.jpg"
+                  alt="Production poster 16 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-17-1200.webp"
+              data-alt="Production poster 17 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 17 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-17-480.webp 480w, /images/posters/poster-17-800.webp 800w, /images/posters/poster-17-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-17.jpg"
+                  alt="Production poster 17 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-18-1200.webp"
+              data-alt="Production poster 18 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 18 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-18-480.webp 480w, /images/posters/poster-18-800.webp 800w, /images/posters/poster-18-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-18.jpg"
+                  alt="Production poster 18 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-19-1200.webp"
+              data-alt="Production poster 19 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 19 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-19-480.webp 480w, /images/posters/poster-19-800.webp 800w, /images/posters/poster-19-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-19.jpg"
+                  alt="Production poster 19 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-20-1200.webp"
+              data-alt="Production poster 20 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 20 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-20-480.webp 480w, /images/posters/poster-20-800.webp 800w, /images/posters/poster-20-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-20.jpg"
+                  alt="Production poster 20 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-21-1200.webp"
+              data-alt="Production poster 21 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 21 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-21-480.webp 480w, /images/posters/poster-21-800.webp 800w, /images/posters/poster-21-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-21.jpg"
+                  alt="Production poster 21 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-22-1200.webp"
+              data-alt="Production poster 22 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 22 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-22-480.webp 480w, /images/posters/poster-22-800.webp 800w, /images/posters/poster-22-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-22.jpg"
+                  alt="Production poster 22 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-23-1200.webp"
+              data-alt="Production poster 23 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 23 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-23-480.webp 480w, /images/posters/poster-23-800.webp 800w, /images/posters/poster-23-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-23.jpg"
+                  alt="Production poster 23 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-24-1200.webp"
+              data-alt="Production poster 24 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 24 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-24-480.webp 480w, /images/posters/poster-24-800.webp 800w, /images/posters/poster-24-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-24.jpg"
+                  alt="Production poster 24 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-25-1200.webp"
+              data-alt="Production poster 25 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 25 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-25-480.webp 480w, /images/posters/poster-25-800.webp 800w, /images/posters/poster-25-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-25.jpg"
+                  alt="Production poster 25 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-26-1200.webp"
+              data-alt="Production poster 26 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 26 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-26-480.webp 480w, /images/posters/poster-26-800.webp 800w, /images/posters/poster-26-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-26.jpg"
+                  alt="Production poster 26 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-27-1200.webp"
+              data-alt="Production poster 27 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 27 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-27-480.webp 480w, /images/posters/poster-27-800.webp 800w, /images/posters/poster-27-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-27.jpg"
+                  alt="Production poster 27 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-28-1200.webp"
+              data-alt="Production poster 28 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 28 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-28-480.webp 480w, /images/posters/poster-28-800.webp 800w, /images/posters/poster-28-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-28.jpg"
+                  alt="Production poster 28 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-29-1200.webp"
+              data-alt="Production poster 29 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 29 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-29-480.webp 480w, /images/posters/poster-29-800.webp 800w, /images/posters/poster-29-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-29.jpg"
+                  alt="Production poster 29 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-30-1200.webp"
+              data-alt="Production poster 30 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 30 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-30-480.webp 480w, /images/posters/poster-30-800.webp 800w, /images/posters/poster-30-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-30.jpg"
+                  alt="Production poster 30 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-31-1200.webp"
+              data-alt="Production poster 31 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 31 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-31-480.webp 480w, /images/posters/poster-31-800.webp 800w, /images/posters/poster-31-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-31.jpg"
+                  alt="Production poster 31 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-32-1200.webp"
+              data-alt="Production poster 32 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 32 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-32-480.webp 480w, /images/posters/poster-32-800.webp 800w, /images/posters/poster-32-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-32.jpg"
+                  alt="Production poster 32 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-33-1200.webp"
+              data-alt="Production poster 33 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 33 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-33-480.webp 480w, /images/posters/poster-33-800.webp 800w, /images/posters/poster-33-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-33.jpg"
+                  alt="Production poster 33 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-34-1200.webp"
+              data-alt="Production poster 34 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 34 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-34-480.webp 480w, /images/posters/poster-34-800.webp 800w, /images/posters/poster-34-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-34.jpg"
+                  alt="Production poster 34 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-35-1200.webp"
+              data-alt="Production poster 35 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 35 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-35-480.webp 480w, /images/posters/poster-35-800.webp 800w, /images/posters/poster-35-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-35.jpg"
+                  alt="Production poster 35 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-36-1200.webp"
+              data-alt="Production poster 36 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 36 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-36-480.webp 480w, /images/posters/poster-36-800.webp 800w, /images/posters/poster-36-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-36.jpg"
+                  alt="Production poster 36 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-37-1200.webp"
+              data-alt="Production poster 37 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 37 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-37-480.webp 480w, /images/posters/poster-37-800.webp 800w, /images/posters/poster-37-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-37.jpg"
+                  alt="Production poster 37 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-38-1200.webp"
+              data-alt="Production poster 38 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 38 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-38-480.webp 480w, /images/posters/poster-38-800.webp 800w, /images/posters/poster-38-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-38.jpg"
+                  alt="Production poster 38 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-39-1200.webp"
+              data-alt="Production poster 39 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 39 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-39-480.webp 480w, /images/posters/poster-39-800.webp 800w, /images/posters/poster-39-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-39.jpg"
+                  alt="Production poster 39 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-40-1200.webp"
+              data-alt="Production poster 40 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 40 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-40-480.webp 480w, /images/posters/poster-40-800.webp 800w, /images/posters/poster-40-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-40.jpg"
+                  alt="Production poster 40 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-41-1200.webp"
+              data-alt="Production poster 41 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 41 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-41-480.webp 480w, /images/posters/poster-41-800.webp 800w, /images/posters/poster-41-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-41.jpg"
+                  alt="Production poster 41 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-42-1200.webp"
+              data-alt="Production poster 42 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 42 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-42-480.webp 480w, /images/posters/poster-42-800.webp 800w, /images/posters/poster-42-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-42.jpg"
+                  alt="Production poster 42 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-43-1200.webp"
+              data-alt="Production poster 43 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 43 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-43-480.webp 480w, /images/posters/poster-43-800.webp 800w, /images/posters/poster-43-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-43.jpg"
+                  alt="Production poster 43 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-44-1200.webp"
+              data-alt="Production poster 44 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 44 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-44-480.webp 480w, /images/posters/poster-44-800.webp 800w, /images/posters/poster-44-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-44.jpg"
+                  alt="Production poster 44 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-45-1200.webp"
+              data-alt="Production poster 45 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 45 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-45-480.webp 480w, /images/posters/poster-45-800.webp 800w, /images/posters/poster-45-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-45.jpg"
+                  alt="Production poster 45 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-46-1200.webp"
+              data-alt="Production poster 46 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 46 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-46-480.webp 480w, /images/posters/poster-46-800.webp 800w, /images/posters/poster-46-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-46.jpg"
+                  alt="Production poster 46 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-47-1200.webp"
+              data-alt="Production poster 47 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 47 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-47-480.webp 480w, /images/posters/poster-47-800.webp 800w, /images/posters/poster-47-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-47.jpg"
+                  alt="Production poster 47 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-48-1200.webp"
+              data-alt="Production poster 48 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 48 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-48-480.webp 480w, /images/posters/poster-48-800.webp 800w, /images/posters/poster-48-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-48.jpg"
+                  alt="Production poster 48 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-49-1200.webp"
+              data-alt="Production poster 49 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 49 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-49-480.webp 480w, /images/posters/poster-49-800.webp 800w, /images/posters/poster-49-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-49.jpg"
+                  alt="Production poster 49 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-50-1200.webp"
+              data-alt="Production poster 50 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 50 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-50-480.webp 480w, /images/posters/poster-50-800.webp 800w, /images/posters/poster-50-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-50.jpg"
+                  alt="Production poster 50 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-51-1200.webp"
+              data-alt="Production poster 51 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 51 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-51-480.webp 480w, /images/posters/poster-51-800.webp 800w, /images/posters/poster-51-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-51.jpg"
+                  alt="Production poster 51 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-52-1200.webp"
+              data-alt="Production poster 52 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 52 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-52-480.webp 480w, /images/posters/poster-52-800.webp 800w, /images/posters/poster-52-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-52.jpg"
+                  alt="Production poster 52 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+            <button
+              class="pf-card"
+              data-cat=""
+              data-cursor="play"
+              data-media-type="image"
+              data-img="/images/posters/poster-53-1200.webp"
+              data-alt="Production poster 53 of 53 — Over Exposure filmography"
+              aria-label="Open production poster 53 of 53"
+            >
+              <picture>
+                <source type="image/webp" srcset="/images/posters/poster-53-480.webp 480w, /images/posters/poster-53-800.webp 800w, /images/posters/poster-53-1200.webp 1200w" sizes="(max-width: 620px) 50vw, (max-width: 960px) 33vw, 16vw" />
+                <img
+                  src="/images/posters/poster-53.jpg"
+                  alt="Production poster 53 of 53 — Over Exposure filmography"
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== CTA ============================= -->
+      <section class="section cta" aria-labelledby="cta-title">
+        <div class="wrap">
+          <div class="eyebrow gold" style="justify-content:center"><span class="tc"><span class="rec-dot"></span>&nbsp;YOUR STORY NEXT</span></div>
+          <h2 class="h-xl reveal" id="cta-title">Start your production<br />in Abu Dhabi.</h2>
+          <div class="reveal mt-2"><a class="btn-solid" href="/contact/">Start a Project</a></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-modal="true" aria-label="Poster viewer">
+      <button class="lb-btn lb-close" data-lb-close aria-label="Close viewer">✕</button>
+      <button class="lb-btn lb-prev" data-lb-prev aria-label="Previous">‹</button>
+      <button class="lb-btn lb-next" data-lb-next aria-label="Next">›</button>
+      <div class="lightbox__stage" data-lb-stage></div>
+      <div class="lightbox__cap" aria-hidden="true">
+        <span class="pf-card__cat" data-lb-cat></span>
+        <span class="g" data-lb-idx></span>
+      </div>
+    </div>
+
+    <footer class="footer" id="footer">
+      <div class="wrap">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a class="brand" href="/" aria-label="Over Exposure Productions — home">
+              <img class="brand__mark" src="/assets/logo-mark.png" width="40" height="40" alt="" />
+              <span class="brand__type">
+                <span class="brand__name">Over Exposure</span>
+                <span class="brand__sub">Productions</span>
+                <img class="brand__ar" src="/assets/wordmark-ar.png" width="398" height="38" alt="أوفر اكسبوجر برودكشنز" />
+              </span>
+            </a>
+            <p class="footer__tag">Bringing the world to Abu Dhabi — production &amp; film servicing based at Yas Creative Hub, Yas Island, Abu Dhabi.</p>
+            <a class="iglink mt-2" href="https://www.instagram.com/ox.pro.ae" target="_blank" rel="noopener" aria-label="Follow Over Exposure Productions on Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+              @ox.pro.ae
+            </a>
+          </div>
+    
+          <div class="footer__col">
+            <h4>Navigate</h4>
+            <a href="/">Home</a>
+            <a href="/company/">About</a>
+            <a href="/services/">Services</a>
+            <a href="/portfolio/">Work</a>
+            <a href="/locations/">Locations</a>
+            <a href="/contact/">Contact</a>
+            <a href="/privacy/">Privacy Policy</a>
+          </div>
+    
+          <div class="footer__col">
+            <h4>Studio</h4>
+            <ul class="stack-sm">
+              <li><a href="mailto:info@ox.productionsuae.com">info@ox.productionsuae.com</a></li>
+              <li><a href="tel:+97155556537">+971 55 556537</a> · Khalid Ali</li>
+              <li>Yas Creative Hub</li>
+              <li>Yas Island — Abu Dhabi</li>
+              <li>Mon–Fri, 8:00am – 7:00pm</li>
+            </ul>
+          </div>
+        </div>
+    
+        <div class="footer__bottom">
+          <span>© 2026 Over Exposure Productions. All rights reserved.</span>
+          <span class="footer__credit">Made by Saad Khan</span>
+          <span class="nav__rec">Abu Dhabi · UAE</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

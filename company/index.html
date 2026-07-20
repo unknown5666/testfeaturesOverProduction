@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      document.documentElement.classList.add('js');
+      /* Access gate — lock the site before first paint if this session hasn't
+         unlocked yet. Adding the class synchronously in <head> means the gate
+         overlay (in chrome.html) covers the page with zero content flash. */
+      (function () {
+        try { if (sessionStorage.getItem('ox_gate') === 'open') return; } catch (e) {}
+        document.documentElement.classList.add('gate-locked');
+      })();
+    </script>
+    <style>
+      /* Critical, framework-independent gate styles so it paints correctly even
+         before main.css loads. Full styling lives in main.css. */
+      #ox-gate { display: none; }
+      html.gate-locked #ox-gate {
+        display: flex; position: fixed; inset: 0; z-index: 2147483000;
+        align-items: center; justify-content: center; background: #0b0c0e;
+      }
+      html.gate-locked body { overflow: hidden; }
+    </style>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0B0C0E" />
+    
+    <title>About | Company Profile &amp; Leadership | Over Exposure Productions</title>
+    <meta name="description" content="Over Exposure Productions — an Abu Dhabi production and film servicing company. Executive summary, leadership team and future vision behind 50+ international productions across the UAE." />
+    <link rel="canonical" href="https://ox.productionsuae.com/company/" />
+    <meta name="robots" content="index, follow" />
+    
+    <meta name="author" content="Over Exposure Productions" />
+    <meta name="generator" content="Over Exposure Productions — bespoke build" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Over Exposure Productions" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="About | Company Profile &amp; Leadership | Over Exposure Productions" />
+    <meta property="og:description" content="Over Exposure Productions — an Abu Dhabi production and film servicing company. Executive summary, leadership team and future vision behind 50+ international productions across the UAE." />
+    <meta property="og:url" content="https://ox.productionsuae.com/company/" />
+    <meta property="og:image" content="https://ox.productionsuae.com/assets/og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Over Exposure Productions — film & video production, Abu Dhabi, UAE" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="About | Company Profile &amp; Leadership | Over Exposure Productions" />
+    <meta name="twitter:description" content="Over Exposure Productions — an Abu Dhabi production and film servicing company. Executive summary, leadership team and future vision behind 50+ international productions across the UAE." />
+    <meta name="twitter:image" content="https://ox.productionsuae.com/assets/og-default.jpg" />
+    
+    <!-- Icons / manifest -->
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/assets/site.webmanifest" />
+    
+    <!-- Fonts: self-hosted, preload the two critical faces -->
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/bebas-neue-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-400.woff2" crossorigin />
+    <link rel="preload" as="image" href="/images/backgrounds/03-exec-summary-studio-1200.webp" fetchpriority="high" />
+    
+    <!-- Structured data -->
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://ox.productionsuae.com/#business","name":"Over Exposure Productions","alternateName":"OX Productions","description":"Production and film servicing company at Yas Creative Hub, Yas Island, Abu Dhabi, UAE — international film & TV production, commercial campaigns, film servicing and post-production.","url":"https://ox.productionsuae.com/","logo":"https://ox.productionsuae.com/assets/logo.png","image":"https://ox.productionsuae.com/assets/logo.png","email":"info@ox.productionsuae.com","telephone":"+97155556537","priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"Yas Creative Hub","addressLocality":"Yas Island","addressRegion":"Abu Dhabi","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":24.4959,"longitude":54.6056},"areaServed":[{"@type":"City","name":"Abu Dhabi"},{"@type":"Country","name":"United Arab Emirates"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"19:00"}],"contactPoint":{"@type":"ContactPoint","contactType":"sales","name":"Khalid Ali","telephone":"+97155556537","email":"info@ox.productionsuae.com"},"sameAs":["https://www.instagram.com/ox.pro.ae"]}
+    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ox.productionsuae.com/"},{"@type":"ListItem","position":2,"name":"Company","item":"https://ox.productionsuae.com/company/"}]}</script>
+    <script type="module" crossorigin src="/assets/main-BmDtJPyg.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/style-BauVk51a.css">
+  </head>
+  <body data-page="company">
+    <!-- Preloader: shutter/exposure wipe. Skips instantly on repeat visits (JS). -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader__inner">
+        <div class="preloader__mark"><span data-pre-word>OVER EXPOSURE</span></div>
+        <div class="preloader__meta">
+          <span class="tc">EXPOSING FRAME</span>
+          <span class="preloader__readout">
+            <span class="preloader__settings">f/1.4 · 1/48 · ISO 800</span>
+            <span class="preloader__pct" id="prePct">00%</span>
+          </span>
+        </div>
+        <!-- 35mm sprocket-hole strip: perforations light up one-by-one (JS). -->
+        <div class="preloader__bar" id="preBar" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="preloader__shutter" id="shutter" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    
+    <!-- Atmospheric overlays -->
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    
+    <!-- Custom cursor (desktop only; hidden via CSS on touch) -->
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="label"></span></div>
+    
+    <!-- ================= Access gate (client-side soft gate) ==================
+         Gated before paint by the head.js `gate-locked` class. This is a light
+         access screen, NOT cryptographic security — the markup ships to the client.
+         Correct code opens the gate for the session (sessionStorage). -->
+    <div id="ox-gate" role="dialog" aria-modal="true" aria-labelledby="ox-gate-title">
+      <div class="ox-gate__panel" id="ox-gate-panel">
+        <span class="ox-gate__eyebrow tc"><span class="rec-dot"></span>&nbsp;RESTRICTED · PRIVATE PREVIEW</span>
+        <h2 class="ox-gate__title" id="ox-gate-title">Enter access code</h2>
+        <p class="ox-gate__sub">This site is a private preview for Over Exposure Productions. Enter your access code to continue.</p>
+        <form class="ox-gate__form" id="ox-gate-form" autocomplete="off" novalidate>
+          <input class="ox-gate__input" id="ox-gate-input" type="password" inputmode="numeric"
+                 aria-label="Access code" placeholder="• • • •" maxlength="16" />
+          <button class="ox-gate__btn" type="submit">Enter <span class="arrow" aria-hidden="true">↗</span></button>
+        </form>
+        <p class="ox-gate__error" id="ox-gate-error" role="alert" hidden>Incorrect access code — try again.</p>
+      </div>
+    </div>
+    <script>
+      /* Self-contained unlock handler — inline so the gate works even if the main
+         bundle fails to load. Code lives here only client-side (soft gate). */
+      (function () {
+        var CODE = '753';
+        var root = document.documentElement;
+        var form = document.getElementById('ox-gate-form');
+        var input = document.getElementById('ox-gate-input');
+        var err = document.getElementById('ox-gate-error');
+        var panel = document.getElementById('ox-gate-panel');
+        if (!form || !root.classList.contains('gate-locked')) return;
+        setTimeout(function () { try { input.focus(); } catch (e) {} }, 80);
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (input.value.trim() === CODE) {
+            try { sessionStorage.setItem('ox_gate', 'open'); } catch (e2) {}
+            root.classList.remove('gate-locked');
+            root.classList.add('gate-open');
+            try { document.dispatchEvent(new Event('ox:unlocked')); } catch (e3) {}
+          } else {
+            if (err) err.hidden = false;
+            input.value = '';
+            try { input.focus(); } catch (e4) {}
+            if (panel) { panel.classList.add('is-shake'); setTimeout(function () { panel.classList.remove('is-shake'); }, 420); }
+          }
+        });
+      })();
+    </script>
+    
+    <!-- ===================== Floating WhatsApp chat ==========================
+         Direct chat with Khaled (+971 55 556537) via the wa.me API. -->
+    <a id="ox-wa" class="ox-wa" href="https://wa.me/97155556537?text=Hi%20Khaled%2C%20I%27d%20like%20to%20talk%20about%20a%20production%20with%20Over%20Exposure%20Productions."
+       target="_blank" rel="noopener" aria-label="Chat with Khaled on WhatsApp">
+      <span class="ox-wa__pulse" aria-hidden="true"></span>
+      <svg class="ox-wa__icon" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M16.02 3.2c-7.06 0-12.8 5.73-12.8 12.79 0 2.25.59 4.45 1.71 6.39L3.2 28.8l6.6-1.72a12.76 12.76 0 0 0 6.2 1.58h.01c7.06 0 12.79-5.73 12.79-12.79 0-3.42-1.33-6.63-3.75-9.05a12.7 12.7 0 0 0-9.03-3.62zm0 23.31h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.02 1.05 1.07-3.92-.25-.4a10.53 10.53 0 0 1-1.62-5.64c0-5.86 4.77-10.63 10.64-10.63 2.84 0 5.51 1.11 7.52 3.12a10.55 10.55 0 0 1 3.11 7.52c0 5.87-4.77 10.63-10.63 10.63zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.58-.95-.85-1.59-1.9-1.78-2.22-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.53-.71-.54l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.43 5.45 4.81.76.33 1.35.52 1.82.67.76.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.38.19-1.52-.08-.13-.29-.21-.61-.37z"/>
+      </svg>
+      <span class="ox-wa__tip">Chat with Khaled</span>
+    </a>
+    
+    <!-- ===================== Cookie / data consent banner ====================
+         Strict two-option banner: Accept or Learn More (routes to Privacy Policy). -->
+    <div id="ox-cookie" class="ox-cookie" role="region" aria-label="Cookie and data consent" hidden>
+      <div class="ox-cookie__inner">
+        <p class="ox-cookie__text">
+          We use essential cookies and limited analytics to operate this site and understand how it's used.
+          Read how we collect and store data in our <a href="/privacy/">Privacy&nbsp;Policy</a>.
+        </p>
+        <div class="ox-cookie__actions">
+          <a class="ox-cookie__learn" href="/privacy/">Learn More</a>
+          <button class="ox-cookie__accept" type="button">Accept</button>
+        </div>
+      </div>
+    </div>
+    <header class="nav" id="nav">
+      <div class="nav__row">
+        <a class="brand" href="/" aria-label="Over Exposure Productions — home">
+          <img class="brand__mark" src="/assets/logo-mark.png" width="34" height="34" alt="" />
+          <span class="brand__type">
+            <span class="brand__name">Over Exposure</span>
+            <span class="brand__sub">Productions</span>
+            <img class="brand__ar" src="/assets/wordmark-ar.png" width="398" height="38" alt="أوفر اكسبوجر برودكشنز" />
+          </span>
+        </a>
+    
+        <nav class="nav__links" aria-label="Primary">
+          <a class="nav__link" href="/" >Home</a>
+          <a class="nav__link" href="/company/" aria-current="page">About</a>
+          <a class="nav__link" href="/services/" >Services</a>
+          <a class="nav__link" href="/portfolio/" >Work</a>
+          <a class="nav__link" href="/locations/" >Locations</a>
+          <a class="nav__link" href="/contact/" >Contact</a>
+          <span class="nav__rec" aria-hidden="true"><span class="rec-dot"></span>REC</span>
+          <a class="nav__cta" href="/contact/">Start a Project</a>
+        </nav>
+    
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+    
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+      <span class="nav-overlay__eyebrow" aria-hidden="true">Menu</span>
+      <nav class="nav-overlay__links" aria-label="Mobile">
+        <a class="nav-overlay__link" href="/" ><span class="idx">01</span><span class="lbl">Home</span></a>
+        <a class="nav-overlay__link" href="/company/" aria-current="page"><span class="idx">02</span><span class="lbl">About</span></a>
+        <a class="nav-overlay__link" href="/services/" ><span class="idx">03</span><span class="lbl">Services</span></a>
+        <a class="nav-overlay__link" href="/portfolio/" ><span class="idx">04</span><span class="lbl">Work</span></a>
+        <a class="nav-overlay__link" href="/locations/" ><span class="idx">05</span><span class="lbl">Locations</span></a>
+        <a class="nav-overlay__link" href="/contact/" ><span class="idx">06</span><span class="lbl">Contact</span></a>
+      </nav>
+      <a class="nav-overlay__cta" href="/contact/">Start a Project<span aria-hidden="true">→</span></a>
+      <div class="nav-overlay__foot">
+        <a href="mailto:info@ox.productionsuae.com">info@ox.productionsuae.com</a>
+        <a href="tel:+97155556537">+971 55 556537</a>
+        <a href="https://www.instagram.com/ox.pro.ae" target="_blank" rel="noopener">@ox.pro.ae</a>
+      </div>
+    </div>
+
+    <main>
+      <!-- ============================ HEADER ============================ -->
+      <header class="pagehead">
+        <div class="pagehead__media">
+          <picture>
+            <source type="image/webp" srcset="/images/backgrounds/03-exec-summary-studio-480.webp 480w, /images/backgrounds/03-exec-summary-studio-800.webp 800w, /images/backgrounds/03-exec-summary-studio-1200.webp 1200w" sizes="100vw" />
+            <img
+              src="/images/backgrounds/03-exec-summary-studio-1200.webp"
+              alt="Professional film studio interior — Over Exposure Productions, Abu Dhabi."
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              draggable="false"
+            />
+          </picture>
+        </div>
+        <div class="pagehead__inner wrap">
+          <nav class="tc" aria-label="Breadcrumb" style="margin-bottom:1.5rem">
+            <a href="/">Home</a> <span class="g">/</span> Company
+          </nav>
+          <div class="eyebrow gold"><span class="tc"><span class="g">·</span> &nbsp;ABOUT OVER EXPOSURE</span></div>
+          <h1 class="h-xl">One Trusted Partner,<br />End to End</h1>
+          <p class="lead pagehead__sub">A single trusted partner for production execution, film servicing, commercial campaigns and strategic media projects.</p>
+        </div>
+      </header>
+
+      <!-- ======================= EXECUTIVE SUMMARY ====================== -->
+      <section class="section" id="summary" aria-labelledby="summary-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">01</span> &nbsp;— EXECUTIVE SUMMARY</span></div>
+            <h2 class="h-lg reveal" id="summary-title">How we<br />deliver</h2>
+          </div>
+          <div class="exec__cols reveal">
+            <div class="exec__col">
+              <div class="no">01</div>
+              <h3>Tender-Ready Delivery</h3>
+              <p>Structured operations with clear scope management, comprehensive documentation support, and procurement-ready processes built for international and institutional clients.</p>
+            </div>
+            <div class="exec__col">
+              <div class="no">02</div>
+              <h3>Local Access</h3>
+              <p>Deep expertise in Abu Dhabi locations, permitting, logistics, vendors, and crew. Unmatched local knowledge ensuring seamless production across the UAE.</p>
+            </div>
+            <div class="exec__col">
+              <div class="no">03</div>
+              <h3>Global Standards</h3>
+              <p>International production discipline across film, TV, brand campaigns, and government projects — delivering world-class quality from Abu Dhabi to global screens.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== WHY OVER EXPOSURE ========================= -->
+      <section class="section band" id="why-ox" aria-labelledby="whyox-title">
+        <div class="band__bg"><picture>
+  <source type="image/webp" srcset="/images/backgrounds/11-why-ox-desert-crew-480.webp 480w, /images/backgrounds/11-why-ox-desert-crew-800.webp 800w, /images/backgrounds/11-why-ox-desert-crew-1200.webp 1200w" sizes="100vw" />
+  <img
+    src="/images/backgrounds/11-why-ox-desert-crew.png"
+    alt="Film crew working a desert set at golden hour — Over Exposure Productions."
+    loading="lazy"
+    
+    decoding="async"
+    draggable="false"
+  />
+</picture>
+</div>
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">02</span> &nbsp;— WHY OVER EXPOSURE PRODUCTIONS</span></div>
+            <h2 class="h-lg reveal" id="whyox-title">Clear differentiators</h2>
+            <p class="lead lead--wide mt-2 reveal">Clear differentiators for supplier onboarding and project award decisions.</p>
+          </div>
+          <div class="whyox reveal">
+            <div class="whyox__cell">
+              <div class="no">01</div>
+              <h3>Proven Industry Leadership</h3>
+              <p>Leadership exposure across 50+ productions, series, films, campaigns and strategic media initiatives.</p>
+            </div>
+            <div class="whyox__cell">
+              <div class="no">02</div>
+              <h3>International Perspective</h3>
+              <p>Experience across Hollywood, Bollywood, GCC, European and international production environments.</p>
+            </div>
+            <div class="whyox__cell">
+              <div class="no">03</div>
+              <h3>Abu Dhabi Advantage</h3>
+              <p>Deep knowledge of local regulations, locations, permitting, production infrastructure and incentives.</p>
+            </div>
+            <div class="whyox__cell">
+              <div class="no">04</div>
+              <h3>Elite Industry Network</h3>
+              <p>Access to crews, studios, suppliers, talent, government stakeholders and production partners.</p>
+            </div>
+            <div class="whyox__cell">
+              <div class="no">05</div>
+              <h3>End-to-End Solutions</h3>
+              <p>One accountable partner from development and planning to production, post and final delivery.</p>
+            </div>
+            <div class="whyox__cell">
+              <div class="no">06</div>
+              <h3>Local Access, Global Standards</h3>
+              <p>Authentic local expertise combined with international production discipline and client service.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================== LEADERSHIP ========================= -->
+      <section class="section" id="team" aria-labelledby="team-title">
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">03</span> &nbsp;— LEADERSHIP TEAM</span></div>
+            <h2 class="h-lg reveal" id="team-title">The people<br />behind the work</h2>
+            <p class="lead lead--wide mt-2 reveal">Our leadership brings decades of combined expertise across international film production, operations, creative direction, and financial strategy — driving Over Exposure Productions to the forefront of Abu Dhabi’s film industry.</p>
+          </div>
+
+          <div class="team__ceo reveal">
+            <div class="team__ceo-photo">
+              <picture>
+                <source type="image/webp" srcset="/images/team/abdulaziz-al-ali-ceo-480.webp 480w, /images/team/abdulaziz-al-ali-ceo-800.webp 800w, /images/team/abdulaziz-al-ali-ceo-1200.webp 1200w" sizes="(max-width: 820px) 70vw, 360px" />
+                <img
+                  src="/images/team/abdulaziz-al-ali-ceo.png"
+                  alt="Abdulaziz Al Ali, CEO of Over Exposure Productions."
+                  loading="lazy"
+                  
+                  decoding="async"
+                  draggable="false"
+                />
+              </picture>
+            </div>
+            <div>
+              <span class="role">CEO</span>
+              <h3>Abdulaziz Al Ali</h3>
+              <p>Strategic vision and international partnerships. Leads the company’s growth across global markets, overseeing 50+ international productions and positioning Abu Dhabi as a premier film destination.</p>
+            </div>
+          </div>
+
+          <div class="team__row reveal">
+            <article class="exec-card">
+              <div class="exec-card__photo"><picture>
+  <source type="image/webp" srcset="/images/team/khalid-ali-gm-480.webp 480w, /images/team/khalid-ali-gm-800.webp 800w, /images/team/khalid-ali-gm-1200.webp 1200w" sizes="172px" />
+  <img
+    src="/images/team/khalid-ali-gm.png"
+    alt="Khalid Ali"
+    loading="lazy"
+    
+    decoding="async"
+    draggable="false"
+  />
+</picture>
+</div>
+              <span class="role">General Manager</span>
+              <h4>Khalid Ali</h4>
+              <p>Operations and client relations. Manages day-to-day production services, vendor coordination, and ensures seamless delivery across all project phases for international and regional clients.</p>
+            </article>
+            <article class="exec-card">
+              <div class="exec-card__photo"><picture>
+  <source type="image/webp" srcset="/images/team/manar-al-naqbi-director-480.webp 480w, /images/team/manar-al-naqbi-director-800.webp 800w, /images/team/manar-al-naqbi-director-1200.webp 1200w" sizes="172px" />
+  <img
+    src="/images/team/manar-al-naqbi-director.jpg"
+    alt="Manar Al Naqbi"
+    loading="lazy"
+    
+    decoding="async"
+    draggable="false"
+  />
+</picture>
+</div>
+              <span class="role">Director</span>
+              <h4>Manar Al Naqbi</h4>
+              <p>Creative leadership and storytelling. Drives the creative vision behind productions, bridging international standards with authentic UAE narratives for film, TV, and branded content.</p>
+            </article>
+            <article class="exec-card">
+              <div class="exec-card__photo"><picture>
+  <source type="image/webp" srcset="/images/team/abdullah-al-ali-cfo-480.webp 480w, /images/team/abdullah-al-ali-cfo-800.webp 800w, /images/team/abdullah-al-ali-cfo-1200.webp 1200w" sizes="172px" />
+  <img
+    src="/images/team/abdullah-al-ali-cfo.png"
+    alt="Abdullah Al Ali"
+    loading="lazy"
+    
+    decoding="async"
+    draggable="false"
+  />
+</picture>
+</div>
+              <span class="role">Chief Financial Officer (CFO)</span>
+              <h4>Abdullah Al Ali</h4>
+              <p>Financial executive overseeing financial strategy, project financing, budgeting, risk management and operational planning.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================== FUTURE VISION ======================= -->
+      <section class="section band" id="future" aria-labelledby="future-title">
+        <div class="band__bg"><picture>
+  <source type="image/webp" srcset="/images/backgrounds/12-future-vision-studio-silhouette-480.webp 480w, /images/backgrounds/12-future-vision-studio-silhouette-800.webp 800w, /images/backgrounds/12-future-vision-studio-silhouette-1200.webp 1200w" sizes="100vw" />
+  <img
+    src="/images/backgrounds/12-future-vision-studio-silhouette.jpg"
+    alt="Silhouetted figure in a film studio — the future vision of Over Exposure Productions."
+    loading="lazy"
+    
+    decoding="async"
+    draggable="false"
+  />
+</picture>
+</div>
+        <div class="wrap">
+          <div class="section__intro">
+            <div class="eyebrow gold"><span class="tc"><span class="g">04</span> &nbsp;— FUTURE VISION</span></div>
+            <h2 class="h-lg reveal" id="future-title">Global reach,<br />local impact</h2>
+            <p class="lead lead--wide mt-2 reveal">Building an Abu Dhabi production partner with global reach and local impact.</p>
+          </div>
+          <div class="future__grid reveal">
+            <ul class="future__points">
+              <li>Strengthen Abu Dhabi’s position as a destination for film, television and premium brand production.</li><li>Expand partnerships with global studios, streaming platforms, agencies, luxury brands and government stakeholders.</li><li>Develop local creative capacity through high-end productions, local suppliers and Emirati talent development.</li><li>Deliver procurement-ready production services for clients across the UAE and internationally.</li>
+            </ul>
+            <div class="future__dir">
+              <div class="tc">Strategic Direction</div>
+              <p>From premium film servicing to large-scale commercial campaigns, Over Exposure Productions is built to scale with Abu Dhabi’s creative economy and become a trusted supplier for world-class productions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== CTA ============================= -->
+      <section class="section cta" aria-labelledby="cta-title">
+        <div class="wrap">
+          <div class="eyebrow gold" style="justify-content:center"><span class="tc"><span class="g">·</span>&nbsp;LET'S ROLL</span></div>
+          <h2 class="h-xl reveal" id="cta-title">Start your production<br />in Abu Dhabi.</h2>
+          <div class="reveal mt-2" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
+            <a class="btn-solid" href="/contact/">Start a Project</a>
+            <a class="btn-ghost" href="/portfolio/">See Our Filmography</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="footer">
+      <div class="wrap">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a class="brand" href="/" aria-label="Over Exposure Productions — home">
+              <img class="brand__mark" src="/assets/logo-mark.png" width="40" height="40" alt="" />
+              <span class="brand__type">
+                <span class="brand__name">Over Exposure</span>
+                <span class="brand__sub">Productions</span>
+                <img class="brand__ar" src="/assets/wordmark-ar.png" width="398" height="38" alt="أوفر اكسبوجر برودكشنز" />
+              </span>
+            </a>
+            <p class="footer__tag">Bringing the world to Abu Dhabi — production &amp; film servicing based at Yas Creative Hub, Yas Island, Abu Dhabi.</p>
+            <a class="iglink mt-2" href="https://www.instagram.com/ox.pro.ae" target="_blank" rel="noopener" aria-label="Follow Over Exposure Productions on Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+              @ox.pro.ae
+            </a>
+          </div>
+    
+          <div class="footer__col">
+            <h4>Navigate</h4>
+            <a href="/">Home</a>
+            <a href="/company/">About</a>
+            <a href="/services/">Services</a>
+            <a href="/portfolio/">Work</a>
+            <a href="/locations/">Locations</a>
+            <a href="/contact/">Contact</a>
+            <a href="/privacy/">Privacy Policy</a>
+          </div>
+    
+          <div class="footer__col">
+            <h4>Studio</h4>
+            <ul class="stack-sm">
+              <li><a href="mailto:info@ox.productionsuae.com">info@ox.productionsuae.com</a></li>
+              <li><a href="tel:+97155556537">+971 55 556537</a> · Khalid Ali</li>
+              <li>Yas Creative Hub</li>
+              <li>Yas Island — Abu Dhabi</li>
+              <li>Mon–Fri, 8:00am – 7:00pm</li>
+            </ul>
+          </div>
+        </div>
+    
+        <div class="footer__bottom">
+          <span>© 2026 Over Exposure Productions. All rights reserved.</span>
+          <span class="footer__credit">Made by Saad Khan</span>
+          <span class="nav__rec">Abu Dhabi · UAE</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
