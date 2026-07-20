@@ -9,6 +9,12 @@ Vite multi-page build → plain static HTML in `dist/`. Vanilla JS + hand-rolled
 **Stack:** Vite 5 · vanilla JS · GSAP + ScrollTrigger · Lenis (desktop only) · sharp (asset pipeline).
 No frameworks, no UI kits, no Tailwind, no Google Fonts (fonts self-hosted).
 
+## Hosting & deploy (know this before touching anything server-facing)
+- **Live URL:** `https://ox.productionsuae.com` — hardcoded as canonical/sitemap base (`site.baseUrl` in `content.js`). Matches live; don't change it.
+- **Host:** Hostinger, LiteSpeed server, PHP 8.3 runtime. hPanel/hcdn.
+- **Deploy = git pull + build on the server.** Pushing to `master` is the deploy: the server pulls, runs `npm run build`, serves `dist/` from `public_html`. So **`public/` files only go live after a build** (Vite copies `public/**` → `dist/` root verbatim, including dotfiles like `.htaccess`). A source change that isn't built won't appear.
+- **Pages (6):** home (`/index.html`), `/company/`, `/services/`, `/portfolio/`, `/contact/`, `/404.html`. All are physical dirs → LiteSpeed serves `index.html` (no rewrite rules; clean trailing-slash URLs).
+
 ## Commands
 ```bash
 npm run dev        # dev server → http://localhost:5173  (use Browser pane preview, not Bash)
@@ -35,7 +41,13 @@ npm run preview     # serve ./dist to sanity-check
 - **Lenis smooth scroll is desktop-only** (skipped when `isMobile`). Mobile uses native scroll.
 - **Trailing-slash clean URLs** (`/services/`) — links + canonicals must keep the slash.
 - **Images:** drop a file, point `content.js` at it, run `npm run build` — sharp regenerates `-480/-800/-1200.webp` automatically. Don't hand-make variants.
-- **Contact form** is `mailto:` fallback + honeypot (`name="company"` hidden field — keep it). No backend.
+- **Contact form has a real PHP backend** (AGENTS map's "mailto fallback" was superseded). Form in `contact/index.html` posts (via `fetch`, `src/js/contact.js`) to `data-endpoint="/contact.php"`. Handler `public/contact.php` validates, honeypots the hidden `name="company"` field (keep it), and sends via `mail()` **with `-f info@ox.productionsuae.com` envelope sender** — that `-f` is load-bearing: without it Hostinger accepts then silently drops the mail (SPF). Also appends every enquiry to `enquiries.log` **above** web root (PII, never web-served) as a lead backup. `.htaccess` denies `*.log`. Delivers to `info@ox.productionsuae.com`. If mail() ever fully fails on the plan → switch to PHPMailer/SMTP (`smtp.hostinger.com:465`, mailbox creds, keep password out of git); steps are documented in-file at the bottom of `contact.php`.
+
+## SEO — how it's wired (mostly done; don't re-audit from scratch)
+- On-page is complete: per-page `<title>`/description/**canonical** + OG/Twitter + **LocalBusiness JSON-LD** (address/geo/hours/phone) + BreadcrumbList, all from `vite.config.js` `pages` + `head.html`. Default `robots: index, follow`; only `/404` is `noindex`.
+- `public/robots.txt` (allows all, points to sitemap) and `public/sitemap.xml` (5 URLs incl `/company/` — keep it listed; it was missing once). Bump `lastmod` on content changes.
+- **Google Search Console:** verified via HTML file `public/googleeaff02fef1aad486.html` (leave it — Google needs it permanently). There's also an unused meta-tag hook: paste a token into `GOOGLE_VERIFY` in `vite.config.js` to emit `<meta name="google-site-verification">`.
+- Current blocker is **not technical** — GSC shows "Crawled – currently not indexed" (normal for a new domain). Fix = external **backlinks** (IG/LinkedIn bio → site, directories, IMDb) + time; on-page has no bug. Homepage is text-thin (~300 words) which doesn't help; expand copy in `content.js` if asked.
 
 ## Verifying UI changes
 Use the Browser pane preview (`preview_start {name: "dev"}`), not Bash, to run the dev server.
