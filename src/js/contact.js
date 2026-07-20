@@ -56,16 +56,17 @@ export function initContact() {
       return;
     }
 
-    /* Formspree (serverless) submit — no mailto handoff. The enquiry posts
-       silently in the background; the visitor never sees their mail app open.
-       CONFIGURE: create a free form at https://formspree.io, then set its
-       endpoint on the form as data-endpoint="https://formspree.io/f/XXXXXXX"
-       (see contact/index.html). Until that's set, we don't POST anywhere —
-       we never send enquiry data to an unknown endpoint. */
+    /* Background submit — no mailto handoff. The enquiry posts silently; the
+       visitor never sees their mail app open. The endpoint is set on the form
+       via data-endpoint (see contact/index.html). We only POST to our own
+       same-origin PHP handler (/contact.php) or a Formspree form URL — never
+       to an arbitrary origin. */
     const ENDPOINT = form.dataset.endpoint || '';
     const submitBtn = form.querySelector('button[type="submit"]');
+    const validEndpoint =
+      /^\/[\w./-]+$/.test(ENDPOINT) || /^https:\/\/formspree\.io\/f\/\w+/.test(ENDPOINT);
 
-    if (!/^https:\/\/formspree\.io\/f\/\w+/.test(ENDPOINT)) {
+    if (!validEndpoint) {
       status.textContent = 'Thanks — please also reach us at info@ox.productionsuae.com while our form is being connected.';
       return;
     }
