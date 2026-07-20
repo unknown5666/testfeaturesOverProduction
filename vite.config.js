@@ -200,7 +200,7 @@ const pages = {
     page: 'contact',
     title: 'Contact Over Exposure Productions | Video Production Abu Dhabi',
     description:
-      'Get in touch with Over Exposure Productions — Yas Creative Hub, Yas Island, Abu Dhabi. Call Khalid Ali on +971 56 712 2179 or email info@ox.productionsuae.com.',
+      'Get in touch with Over Exposure Productions — Yas Creative Hub, Yas Island, Abu Dhabi. Call Khalid Ali on +971 55 556 5537 or email info@ox.productionsuae.com.',
     canonical: `${BASE}/contact/`,
     jsonld: ld(
       localBusiness,
