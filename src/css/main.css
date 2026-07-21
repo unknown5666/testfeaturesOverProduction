@@ -1342,10 +1342,6 @@ html.js .hero__rotate ul {
   color: var(--dimmer);
   font-size: var(--step--1);
 }
-.footer__credit {
-  letter-spacing: 0.04em;
-  opacity: 0.8;
-}
 .iglink {
   display: inline-flex;
   align-items: center;
