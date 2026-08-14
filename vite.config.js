@@ -132,10 +132,10 @@ const shared = {
   postersPreview: posters.slice(0, 12),
   locations,
   // Locations grouped by category for the gallery view.
-  locationsView: locations.categories.map((c) => ({
-    ...c,
-    items: locations.items.filter((i) => i.category === c.name),
-  })),
+  locationsView: locations.categories.map((c) => {
+    const items = locations.items.filter((i) => i.category === c.name);
+    return { ...c, items, countLabel: `${items.length} location${items.length === 1 ? '' : 's'}` };
+  }),
   ogImage: OG,
   googleVerify: GOOGLE_VERIFY,
   year: new Date().getFullYear(),
@@ -212,11 +212,11 @@ const pages = {
   },
   '/locations/index.html': {
     page: 'locations',
-    title: 'Abu Dhabi Filming Locations | Modern Architecture & Villas | Over Exposure Productions',
+    title: 'Abu Dhabi Filming Locations | Private Residences & Desert Estates | Over Exposure Productions',
     description:
-      'A curated, permit-ready library of Abu Dhabi filming locations — modern architecture, towers, marina skylines and premium beachfront, urban and desert villas, scouted and serviced by Over Exposure Productions.',
+      'Abu Dhabi filming locations scouted and serviced by Over Exposure Productions — classical and contemporary private villas, blank interior stages, and a working desert estate with stables, pool pavilion and open horizons.',
     canonical: `${BASE}/locations/`,
-    preloadImg: '/images/locations/ad-skyline-1200.webp',
+    preloadImg: '/images/locations/paddock-majlis-1200.webp',
     jsonld: ld(
       breadcrumb([
         { name: 'Home', path: '/' },

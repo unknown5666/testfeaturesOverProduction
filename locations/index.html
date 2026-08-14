@@ -11,7 +11,7 @@
       <!-- ============================ HERO ============================ -->
       <header class="loc-hero">
         <div class="loc-hero__media">
-          {{> pic src=locations.hero.bg alt="Abu Dhabi skyline at sunset — Over Exposure Productions location library." eager=true sizes="100vw"}}
+          {{> pic src=locations.hero.bg alt="Long lantern-hung majlis under a pitched ceiling — Over Exposure Productions location library." eager=true sizes="100vw"}}
         </div>
         <div class="loc-hero__inner wrap">
           <div class="eyebrow gold"><span class="tc"><span class="g">·</span>&nbsp;{{locations.hero.eyebrow}}</span></div>
@@ -35,7 +35,7 @@
           <div class="loc-cat" data-cat="{{this.slug}}">
             <div class="loc-cat__head">
               <h2 class="loc-cat__title">{{this.name}}</h2>
-              <span class="loc-cat__count">{{this.items.length}} locations</span>
+              <span class="loc-cat__count">{{this.countLabel}}</span>
             </div>
             <p class="loc-hero__lead" style="font-size:var(--step-0); color:var(--dim); max-width:46rem; margin-bottom:1.5rem">{{this.blurb}}</p>
             <div class="loc-grid">
