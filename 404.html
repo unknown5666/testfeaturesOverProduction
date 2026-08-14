@@ -5,24 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       document.documentElement.classList.add('js');
-      /* Access gate — lock the site before first paint if this session hasn't
-         unlocked yet. Adding the class synchronously in <head> means the gate
-         overlay (in chrome.html) covers the page with zero content flash. */
-      (function () {
-        try { if (sessionStorage.getItem('ox_gate') === 'open') return; } catch (e) {}
-        document.documentElement.classList.add('gate-locked');
-      })();
     </script>
-    <style>
-      /* Critical, framework-independent gate styles so it paints correctly even
-         before main.css loads. Full styling lives in main.css. */
-      #ox-gate { display: none; }
-      html.gate-locked #ox-gate {
-        display: flex; position: fixed; inset: 0; z-index: 2147483000;
-        align-items: center; justify-content: center; background: #0b0c0e;
-      }
-      html.gate-locked body { overflow: hidden; }
-    </style>
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0B0C0E" />
     
@@ -66,8 +49,8 @@
     
     <!-- Structured data -->
     
-    <script type="module" crossorigin src="/assets/main-BmDtJPyg.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/style-BaG7Z9Kd.css">
+    <script type="module" crossorigin src="/assets/main-rY8qzs7j.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/style-BVZgPs1v.css">
   </head>
   <body data-page="404">
     <!-- Preloader: shutter/exposure wipe. Skips instantly on repeat visits (JS). -->
@@ -97,52 +80,6 @@
     <!-- Custom cursor (desktop only; hidden via CSS on touch) -->
     <div class="cursor" id="cursor" aria-hidden="true"></div>
     <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="label"></span></div>
-    
-    <!-- ================= Access gate (client-side soft gate) ==================
-         Gated before paint by the head.js `gate-locked` class. This is a light
-         access screen, NOT cryptographic security — the markup ships to the client.
-         Correct code opens the gate for the session (sessionStorage). -->
-    <div id="ox-gate" role="dialog" aria-modal="true" aria-labelledby="ox-gate-title">
-      <div class="ox-gate__panel" id="ox-gate-panel">
-        <span class="ox-gate__eyebrow tc"><span class="rec-dot"></span>&nbsp;RESTRICTED · PRIVATE PREVIEW</span>
-        <h2 class="ox-gate__title" id="ox-gate-title">Enter access code</h2>
-        <p class="ox-gate__sub">This site is a private preview for Over Exposure Productions. Enter your access code to continue.</p>
-        <form class="ox-gate__form" id="ox-gate-form" autocomplete="off" novalidate>
-          <input class="ox-gate__input" id="ox-gate-input" type="password" inputmode="numeric"
-                 aria-label="Access code" placeholder="• • • •" maxlength="16" />
-          <button class="ox-gate__btn" type="submit">Enter <span class="arrow" aria-hidden="true">↗</span></button>
-        </form>
-        <p class="ox-gate__error" id="ox-gate-error" role="alert" hidden>Incorrect access code — try again.</p>
-      </div>
-    </div>
-    <script>
-      /* Self-contained unlock handler — inline so the gate works even if the main
-         bundle fails to load. Code lives here only client-side (soft gate). */
-      (function () {
-        var CODE = '753';
-        var root = document.documentElement;
-        var form = document.getElementById('ox-gate-form');
-        var input = document.getElementById('ox-gate-input');
-        var err = document.getElementById('ox-gate-error');
-        var panel = document.getElementById('ox-gate-panel');
-        if (!form || !root.classList.contains('gate-locked')) return;
-        setTimeout(function () { try { input.focus(); } catch (e) {} }, 80);
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          if (input.value.trim() === CODE) {
-            try { sessionStorage.setItem('ox_gate', 'open'); } catch (e2) {}
-            root.classList.remove('gate-locked');
-            root.classList.add('gate-open');
-            try { document.dispatchEvent(new Event('ox:unlocked')); } catch (e3) {}
-          } else {
-            if (err) err.hidden = false;
-            input.value = '';
-            try { input.focus(); } catch (e4) {}
-            if (panel) { panel.classList.add('is-shake'); setTimeout(function () { panel.classList.remove('is-shake'); }, 420); }
-          }
-        });
-      })();
-    </script>
     
     <!-- ===================== Floating WhatsApp chat ==========================
          Direct chat with Khaled (+971 55 556 5537) via the wa.me API. -->
