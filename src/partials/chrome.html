@@ -26,52 +26,6 @@
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="label"></span></div>
 
-<!-- ================= Access gate (client-side soft gate) ==================
-     Gated before paint by the head.js `gate-locked` class. This is a light
-     access screen, NOT cryptographic security — the markup ships to the client.
-     Correct code opens the gate for the session (sessionStorage). -->
-<div id="ox-gate" role="dialog" aria-modal="true" aria-labelledby="ox-gate-title">
-  <div class="ox-gate__panel" id="ox-gate-panel">
-    <span class="ox-gate__eyebrow tc"><span class="rec-dot"></span>&nbsp;RESTRICTED · PRIVATE PREVIEW</span>
-    <h2 class="ox-gate__title" id="ox-gate-title">Enter access code</h2>
-    <p class="ox-gate__sub">This site is a private preview for Over Exposure Productions. Enter your access code to continue.</p>
-    <form class="ox-gate__form" id="ox-gate-form" autocomplete="off" novalidate>
-      <input class="ox-gate__input" id="ox-gate-input" type="password" inputmode="numeric"
-             aria-label="Access code" placeholder="• • • •" maxlength="16" />
-      <button class="ox-gate__btn" type="submit">Enter <span class="arrow" aria-hidden="true">↗</span></button>
-    </form>
-    <p class="ox-gate__error" id="ox-gate-error" role="alert" hidden>Incorrect access code — try again.</p>
-  </div>
-</div>
-<script>
-  /* Self-contained unlock handler — inline so the gate works even if the main
-     bundle fails to load. Code lives here only client-side (soft gate). */
-  (function () {
-    var CODE = '753';
-    var root = document.documentElement;
-    var form = document.getElementById('ox-gate-form');
-    var input = document.getElementById('ox-gate-input');
-    var err = document.getElementById('ox-gate-error');
-    var panel = document.getElementById('ox-gate-panel');
-    if (!form || !root.classList.contains('gate-locked')) return;
-    setTimeout(function () { try { input.focus(); } catch (e) {} }, 80);
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (input.value.trim() === CODE) {
-        try { sessionStorage.setItem('ox_gate', 'open'); } catch (e2) {}
-        root.classList.remove('gate-locked');
-        root.classList.add('gate-open');
-        try { document.dispatchEvent(new Event('ox:unlocked')); } catch (e3) {}
-      } else {
-        if (err) err.hidden = false;
-        input.value = '';
-        try { input.focus(); } catch (e4) {}
-        if (panel) { panel.classList.add('is-shake'); setTimeout(function () { panel.classList.remove('is-shake'); }, 420); }
-      }
-    });
-  })();
-</script>
-
 <!-- ===================== Floating WhatsApp chat ==========================
      Direct chat with Khaled (+971 55 556 5537) via the wa.me API. -->
 <a id="ox-wa" class="ox-wa" href="https://wa.me/971555565537?text=Hi%20Khaled%2C%20I%27d%20like%20to%20talk%20about%20a%20production%20with%20Over%20Exposure%20Productions."

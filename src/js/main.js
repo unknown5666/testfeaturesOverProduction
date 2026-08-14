@@ -559,9 +559,8 @@ function initAnchors() {
 }
 
 /* --------------------------- Global UI (all pages) ----------------------
-   Cookie/data-consent banner reveal + accept. The floating WhatsApp button
-   and the access gate are self-contained (CSS + inline script); this only
-   drives the consent banner. */
+   Cookie/data-consent banner reveal + accept. The floating WhatsApp button is
+   self-contained (CSS only); this just drives the consent banner. */
 function initGlobalUI() {
   const banner = $('#ox-cookie');
   if (!banner) return;
@@ -571,7 +570,6 @@ function initGlobalUI() {
   if (consented) return;
 
   const reveal = () => {
-    if (document.documentElement.classList.contains('gate-locked')) return;
     banner.hidden = false;
     requestAnimationFrame(() => banner.classList.add('is-in'));
   };
@@ -582,12 +580,7 @@ function initGlobalUI() {
   };
   banner.querySelector('.ox-cookie__accept')?.addEventListener('click', accept);
 
-  // Don't surface the banner over the access gate — wait for unlock.
-  if (document.documentElement.classList.contains('gate-locked')) {
-    document.addEventListener('ox:unlocked', () => setTimeout(reveal, 600), { once: true });
-  } else {
-    setTimeout(reveal, 900);
-  }
+  setTimeout(reveal, 900);
 }
 
 /* --------------------------- Locations filter --------------------------- */
