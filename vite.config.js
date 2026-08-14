@@ -212,11 +212,11 @@ const pages = {
   },
   '/locations/index.html': {
     page: 'locations',
-    title: 'Abu Dhabi Filming Locations | Private Residences & Desert Estates | Over Exposure Productions',
+    title: 'Abu Dhabi Filming Locations | Modern Architecture, Villas & Desert Estate | Over Exposure Productions',
     description:
-      'Abu Dhabi filming locations scouted and serviced by Over Exposure Productions — classical and contemporary private villas, blank interior stages, and a working desert estate with stables, pool pavilion and open horizons.',
+      'A curated, permit-ready library of Abu Dhabi filming locations — glass towers, marina skylines and landmark interiors, private beachfront, urban, desert and classical villas, and a working desert estate with stables, pool pavilion and open horizon.',
     canonical: `${BASE}/locations/`,
-    preloadImg: '/images/locations/paddock-majlis-1200.webp',
+    preloadImg: '/images/locations/ad-skyline-1200.webp',
     jsonld: ld(
       breadcrumb([
         { name: 'Home', path: '/' },
